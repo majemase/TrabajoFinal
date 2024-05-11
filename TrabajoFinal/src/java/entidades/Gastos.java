@@ -23,21 +23,15 @@ public class Gastos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "ID_tarea")
-    private Tareas tarea;
     private String descripcion;
-    private int transporte;
-    private int total_gastos;
-
-    public Tareas getTarea() {
-        return tarea;
-    }
-
-    public void setTarea(Tareas tarea) {
-        this.tarea = tarea;
-    }
+    private double transporte;
+    private double total_gastos;
+    @ManyToOne
+    @JoinColumn(name = "id_tarea")
+    private Tareas tarea;
+    @ManyToOne
+    @JoinColumn(name = "id_material")
+    private Materiales material;
 
     public String getDescripcion() {
         return descripcion;
@@ -47,20 +41,36 @@ public class Gastos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public int getTransporte() {
+    public double getTransporte() {
         return transporte;
     }
 
-    public void setTransporte(int transporte) {
+    public void setTransporte(double transporte) {
         this.transporte = transporte;
     }
 
-    public int getTotal_gastos() {
+    public double getTotal_gastos() {
         return total_gastos;
     }
 
-    public void setTotal_gastos(int total_gastos) {
+    public void setTotal_gastos(double total_gastos) {
         this.total_gastos = total_gastos;
+    }
+
+    public Tareas getTarea() {
+        return tarea;
+    }
+
+    public void setTarea(Tareas tarea) {
+        this.tarea = tarea;
+    }
+
+    public Materiales getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Materiales material) {
+        this.material = material;
     }
 
     public Long getId() {

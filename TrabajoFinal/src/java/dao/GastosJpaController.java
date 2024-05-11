@@ -7,13 +7,15 @@ package dao;
 import dao.exceptions.NonexistentEntityException;
 import entidades.Gastos;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entidades.Tareas;
+import entidades.Materiales;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -35,7 +37,25 @@ public class GastosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Tareas tarea = gastos.getTarea();
+            if (tarea != null) {
+                tarea = em.getReference(tarea.getClass(), tarea.getId_tarea());
+                gastos.setTarea(tarea);
+            }
+            Materiales material = gastos.getMaterial();
+            if (material != null) {
+                material = em.getReference(material.getClass(), material.getId_material());
+                gastos.setMaterial(material);
+            }
             em.persist(gastos);
+            if (tarea != null) {
+                tarea.getGastos().add(gastos);
+                tarea = em.merge(tarea);
+            }
+            if (material != null) {
+                material.getGastos().add(gastos);
+                material = em.merge(material);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -49,7 +69,36 @@ public class GastosJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Gastos persistentGastos = em.find(Gastos.class, gastos.getId());
+            Tareas tareaOld = persistentGastos.getTarea();
+            Tareas tareaNew = gastos.getTarea();
+            Materiales materialOld = persistentGastos.getMaterial();
+            Materiales materialNew = gastos.getMaterial();
+            if (tareaNew != null) {
+                tareaNew = em.getReference(tareaNew.getClass(), tareaNew.getId_tarea());
+                gastos.setTarea(tareaNew);
+            }
+            if (materialNew != null) {
+                materialNew = em.getReference(materialNew.getClass(), materialNew.getId_material());
+                gastos.setMaterial(materialNew);
+            }
             gastos = em.merge(gastos);
+            if (tareaOld != null && !tareaOld.equals(tareaNew)) {
+                tareaOld.getGastos().remove(gastos);
+                tareaOld = em.merge(tareaOld);
+            }
+            if (tareaNew != null && !tareaNew.equals(tareaOld)) {
+                tareaNew.getGastos().add(gastos);
+                tareaNew = em.merge(tareaNew);
+            }
+            if (materialOld != null && !materialOld.equals(materialNew)) {
+                materialOld.getGastos().remove(gastos);
+                materialOld = em.merge(materialOld);
+            }
+            if (materialNew != null && !materialNew.equals(materialOld)) {
+                materialNew.getGastos().add(gastos);
+                materialNew = em.merge(materialNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -78,6 +127,16 @@ public class GastosJpaController implements Serializable {
                 gastos.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The gastos with id " + id + " no longer exists.", enfe);
+            }
+            Tareas tarea = gastos.getTarea();
+            if (tarea != null) {
+                tarea.getGastos().remove(gastos);
+                tarea = em.merge(tarea);
+            }
+            Materiales material = gastos.getMaterial();
+            if (material != null) {
+                material.getGastos().remove(gastos);
+                material = em.merge(material);
             }
             em.remove(gastos);
             em.getTransaction().commit();

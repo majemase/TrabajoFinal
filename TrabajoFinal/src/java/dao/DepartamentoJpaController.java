@@ -7,13 +7,15 @@ package dao;
 import dao.exceptions.NonexistentEntityException;
 import entidades.Departamento;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entidades.Empleado;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -31,11 +33,29 @@ public class DepartamentoJpaController implements Serializable {
     }
 
     public void create(Departamento departamento) {
+        if (departamento.getEmpleados() == null) {
+            departamento.setEmpleados(new ArrayList<Empleado>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Empleado> attachedEmpleados = new ArrayList<Empleado>();
+            for (Empleado empleadosEmpleadoToAttach : departamento.getEmpleados()) {
+                empleadosEmpleadoToAttach = em.getReference(empleadosEmpleadoToAttach.getClass(), empleadosEmpleadoToAttach.getId_empleado());
+                attachedEmpleados.add(empleadosEmpleadoToAttach);
+            }
+            departamento.setEmpleados(attachedEmpleados);
             em.persist(departamento);
+            for (Empleado empleadosEmpleado : departamento.getEmpleados()) {
+                Departamento oldDepartamentoOfEmpleadosEmpleado = empleadosEmpleado.getDepartamento();
+                empleadosEmpleado.setDepartamento(departamento);
+                empleadosEmpleado = em.merge(empleadosEmpleado);
+                if (oldDepartamentoOfEmpleadosEmpleado != null) {
+                    oldDepartamentoOfEmpleadosEmpleado.getEmpleados().remove(empleadosEmpleado);
+                    oldDepartamentoOfEmpleadosEmpleado = em.merge(oldDepartamentoOfEmpleadosEmpleado);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -49,12 +69,39 @@ public class DepartamentoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Departamento persistentDepartamento = em.find(Departamento.class, departamento.getId_departamento());
+            List<Empleado> empleadosOld = persistentDepartamento.getEmpleados();
+            List<Empleado> empleadosNew = departamento.getEmpleados();
+            List<Empleado> attachedEmpleadosNew = new ArrayList<Empleado>();
+            for (Empleado empleadosNewEmpleadoToAttach : empleadosNew) {
+                empleadosNewEmpleadoToAttach = em.getReference(empleadosNewEmpleadoToAttach.getClass(), empleadosNewEmpleadoToAttach.getId_empleado());
+                attachedEmpleadosNew.add(empleadosNewEmpleadoToAttach);
+            }
+            empleadosNew = attachedEmpleadosNew;
+            departamento.setEmpleados(empleadosNew);
             departamento = em.merge(departamento);
+            for (Empleado empleadosOldEmpleado : empleadosOld) {
+                if (!empleadosNew.contains(empleadosOldEmpleado)) {
+                    empleadosOldEmpleado.setDepartamento(null);
+                    empleadosOldEmpleado = em.merge(empleadosOldEmpleado);
+                }
+            }
+            for (Empleado empleadosNewEmpleado : empleadosNew) {
+                if (!empleadosOld.contains(empleadosNewEmpleado)) {
+                    Departamento oldDepartamentoOfEmpleadosNewEmpleado = empleadosNewEmpleado.getDepartamento();
+                    empleadosNewEmpleado.setDepartamento(departamento);
+                    empleadosNewEmpleado = em.merge(empleadosNewEmpleado);
+                    if (oldDepartamentoOfEmpleadosNewEmpleado != null && !oldDepartamentoOfEmpleadosNewEmpleado.equals(departamento)) {
+                        oldDepartamentoOfEmpleadosNewEmpleado.getEmpleados().remove(empleadosNewEmpleado);
+                        oldDepartamentoOfEmpleadosNewEmpleado = em.merge(oldDepartamentoOfEmpleadosNewEmpleado);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = departamento.getId();
+                Long id = departamento.getId_departamento();
                 if (findDepartamento(id) == null) {
                     throw new NonexistentEntityException("The departamento with id " + id + " no longer exists.");
                 }
@@ -75,9 +122,14 @@ public class DepartamentoJpaController implements Serializable {
             Departamento departamento;
             try {
                 departamento = em.getReference(Departamento.class, id);
-                departamento.getId();
+                departamento.getId_departamento();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The departamento with id " + id + " no longer exists.", enfe);
+            }
+            List<Empleado> empleados = departamento.getEmpleados();
+            for (Empleado empleadosEmpleado : empleados) {
+                empleadosEmpleado.setDepartamento(null);
+                empleadosEmpleado = em.merge(empleadosEmpleado);
             }
             em.remove(departamento);
             em.getTransaction().commit();

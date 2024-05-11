@@ -5,15 +5,18 @@
 package dao;
 
 import dao.exceptions.NonexistentEntityException;
-import entidades.Materiales;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import entidades.Tareas;
+import java.util.ArrayList;
+import java.util.List;
+import entidades.Gastos;
+import entidades.Materiales;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -31,11 +34,42 @@ public class MaterialesJpaController implements Serializable {
     }
 
     public void create(Materiales materiales) {
+        if (materiales.getTareas() == null) {
+            materiales.setTareas(new ArrayList<Tareas>());
+        }
+        if (materiales.getGastos() == null) {
+            materiales.setGastos(new ArrayList<Gastos>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Tareas> attachedTareas = new ArrayList<Tareas>();
+            for (Tareas tareasTareasToAttach : materiales.getTareas()) {
+                tareasTareasToAttach = em.getReference(tareasTareasToAttach.getClass(), tareasTareasToAttach.getId_tarea());
+                attachedTareas.add(tareasTareasToAttach);
+            }
+            materiales.setTareas(attachedTareas);
+            List<Gastos> attachedGastos = new ArrayList<Gastos>();
+            for (Gastos gastosGastosToAttach : materiales.getGastos()) {
+                gastosGastosToAttach = em.getReference(gastosGastosToAttach.getClass(), gastosGastosToAttach.getId());
+                attachedGastos.add(gastosGastosToAttach);
+            }
+            materiales.setGastos(attachedGastos);
             em.persist(materiales);
+            for (Tareas tareasTareas : materiales.getTareas()) {
+                tareasTareas.getMateriales().add(materiales);
+                tareasTareas = em.merge(tareasTareas);
+            }
+            for (Gastos gastosGastos : materiales.getGastos()) {
+                Materiales oldMaterialOfGastosGastos = gastosGastos.getMaterial();
+                gastosGastos.setMaterial(materiales);
+                gastosGastos = em.merge(gastosGastos);
+                if (oldMaterialOfGastosGastos != null) {
+                    oldMaterialOfGastosGastos.getGastos().remove(gastosGastos);
+                    oldMaterialOfGastosGastos = em.merge(oldMaterialOfGastosGastos);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -49,12 +83,60 @@ public class MaterialesJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Materiales persistentMateriales = em.find(Materiales.class, materiales.getId_material());
+            List<Tareas> tareasOld = persistentMateriales.getTareas();
+            List<Tareas> tareasNew = materiales.getTareas();
+            List<Gastos> gastosOld = persistentMateriales.getGastos();
+            List<Gastos> gastosNew = materiales.getGastos();
+            List<Tareas> attachedTareasNew = new ArrayList<Tareas>();
+            for (Tareas tareasNewTareasToAttach : tareasNew) {
+                tareasNewTareasToAttach = em.getReference(tareasNewTareasToAttach.getClass(), tareasNewTareasToAttach.getId_tarea());
+                attachedTareasNew.add(tareasNewTareasToAttach);
+            }
+            tareasNew = attachedTareasNew;
+            materiales.setTareas(tareasNew);
+            List<Gastos> attachedGastosNew = new ArrayList<Gastos>();
+            for (Gastos gastosNewGastosToAttach : gastosNew) {
+                gastosNewGastosToAttach = em.getReference(gastosNewGastosToAttach.getClass(), gastosNewGastosToAttach.getId());
+                attachedGastosNew.add(gastosNewGastosToAttach);
+            }
+            gastosNew = attachedGastosNew;
+            materiales.setGastos(gastosNew);
             materiales = em.merge(materiales);
+            for (Tareas tareasOldTareas : tareasOld) {
+                if (!tareasNew.contains(tareasOldTareas)) {
+                    tareasOldTareas.getMateriales().remove(materiales);
+                    tareasOldTareas = em.merge(tareasOldTareas);
+                }
+            }
+            for (Tareas tareasNewTareas : tareasNew) {
+                if (!tareasOld.contains(tareasNewTareas)) {
+                    tareasNewTareas.getMateriales().add(materiales);
+                    tareasNewTareas = em.merge(tareasNewTareas);
+                }
+            }
+            for (Gastos gastosOldGastos : gastosOld) {
+                if (!gastosNew.contains(gastosOldGastos)) {
+                    gastosOldGastos.setMaterial(null);
+                    gastosOldGastos = em.merge(gastosOldGastos);
+                }
+            }
+            for (Gastos gastosNewGastos : gastosNew) {
+                if (!gastosOld.contains(gastosNewGastos)) {
+                    Materiales oldMaterialOfGastosNewGastos = gastosNewGastos.getMaterial();
+                    gastosNewGastos.setMaterial(materiales);
+                    gastosNewGastos = em.merge(gastosNewGastos);
+                    if (oldMaterialOfGastosNewGastos != null && !oldMaterialOfGastosNewGastos.equals(materiales)) {
+                        oldMaterialOfGastosNewGastos.getGastos().remove(gastosNewGastos);
+                        oldMaterialOfGastosNewGastos = em.merge(oldMaterialOfGastosNewGastos);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = materiales.getId();
+                Long id = materiales.getId_material();
                 if (findMateriales(id) == null) {
                     throw new NonexistentEntityException("The materiales with id " + id + " no longer exists.");
                 }
@@ -75,9 +157,19 @@ public class MaterialesJpaController implements Serializable {
             Materiales materiales;
             try {
                 materiales = em.getReference(Materiales.class, id);
-                materiales.getId();
+                materiales.getId_material();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The materiales with id " + id + " no longer exists.", enfe);
+            }
+            List<Tareas> tareas = materiales.getTareas();
+            for (Tareas tareasTareas : tareas) {
+                tareasTareas.getMateriales().remove(materiales);
+                tareasTareas = em.merge(tareasTareas);
+            }
+            List<Gastos> gastos = materiales.getGastos();
+            for (Gastos gastosGastos : gastos) {
+                gastosGastos.setMaterial(null);
+                gastosGastos = em.merge(gastosGastos);
             }
             em.remove(materiales);
             em.getTransaction().commit();

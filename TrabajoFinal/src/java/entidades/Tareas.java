@@ -5,11 +5,19 @@
 package entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import modelo.Estado;
 
 /**
  *
@@ -21,12 +29,29 @@ public class Tareas implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private Long id_tarea;
     private String descripcion;
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    private String estado;
+    private Date fecha_inicio;
+    private Date fecha_fin;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+    @ManyToMany
+    @JoinTable(
+            name = "tarea_empleado",
+            joinColumns = @JoinColumn(name = "id_tarea"),
+            inverseJoinColumns = @JoinColumn(name = "id_empleado")
+    )
+    private List<Empleado> empleados;
+    @ManyToMany
+    @JoinTable(
+            name = "tarea_material",
+            joinColumns = @JoinColumn(name = "id_tarea"),
+            inverseJoinColumns = @JoinColumn(name = "id_material")
+    )
+    private List<Materiales> materiales;
+    @OneToMany
+    @JoinColumn(name = "id_tarea")
+    private List<Gastos> gastos;
 
     public String getDescripcion() {
         return descripcion;
@@ -36,53 +61,77 @@ public class Tareas implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
+    public Date getFecha_inicio() {
+        return fecha_inicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFecha_inicio(Date fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
     }
 
-    public LocalDate getFechaFin() {
-        return fechaFin;
+    public Date getFecha_fin() {
+        return fecha_fin;
     }
 
-    public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setFecha_fin(Date fecha_fin) {
+        this.fecha_fin = fecha_fin;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    public Long getId() {
-        return id;
+    public List<Empleado> getEmpleados() {
+        return empleados;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
+    }
+
+    public List<Materiales> getMateriales() {
+        return materiales;
+    }
+
+    public void setMateriales(List<Materiales> materiales) {
+        this.materiales = materiales;
+    }
+
+    public List<Gastos> getGastos() {
+        return gastos;
+    }
+
+    public void setGastos(List<Gastos> gastos) {
+        this.gastos = gastos;
+    }
+
+    public Long getId_tarea() {
+        return id_tarea;
+    }
+
+    public void setId_tarea(Long id_tarea) {
+        this.id_tarea = id_tarea;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (id_tarea != null ? id_tarea.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the id_tarea fields are not set
         if (!(object instanceof Tareas)) {
             return false;
         }
         Tareas other = (Tareas) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id_tarea == null && other.id_tarea != null) || (this.id_tarea != null && !this.id_tarea.equals(other.id_tarea))) {
             return false;
         }
         return true;
@@ -90,7 +139,7 @@ public class Tareas implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Tareas[ id=" + id + " ]";
+        return "entidades.Tareas[ id=" + id_tarea + " ]";
     }
 
 }

@@ -16,22 +16,25 @@ import javax.persistence.Persistence;
  */
 public class modeloLogin {
 
-    public static Empleado validarUsuario(String usuario, String pass) {
-        Empleado u = null;
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BibliotecaPU");
+    static final String PU = "TrabajoFinalPU";
+
+    public static Empleado validarEmpleado(String dni, String pass) {
+        Empleado e = null;
+        EntityManagerFactory emf = new Persistence().createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         List<Empleado> empleados = ejc.findEmpleadoEntities();
         boolean encontrado = false;
         for (int i = 0; i < empleados.size() && !encontrado; i++) {
             Empleado actual = empleados.get(i);
-            if (actual.getUsuario().equals(usuario)) {
+            if (actual.getDni().equals(dni)) {
                 encontrado = true;
                 if (actual.getPass().equals(pass)) {
-                    u = actual;
+                    e = actual;
                 }
             }
         }
         emf.close();
-        return u;
+        return e;
     }
+
 }

@@ -2,28 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controladores.empleados;
 
-import dao.EmpleadoJpaController;
 import entidades.Empleado;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.modeloLogin;
+import modelo.modeloDepartamento;
+import modelo.modeloEmpleado;
 
 /**
  *
  * @author majemase
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "MenuPrincipal", urlPatterns = {"/empleado/MenuPrincipal"})
+public class MenuPrincipal extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +32,13 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vista = "/login.jsp";
-        String usuario = request.getParameter("email");
-        String pass = request.getParameter("contraseña");
-        if (usuario != null && usuario != null && !usuario.trim().isEmpty()
-                && !pass.trim().isEmpty()) {
-            Empleado u = modeloLogin.validarUsuario(usuario, pass);
-            if (u != null) {
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("usuario", u);
-                response.sendRedirect("index");
-                return;
-            } else {
-                String error = "usuario o contraseña incorrectos, por favor vuelva a intentarlo";
-                request.setAttribute("error", error);
-            }
+        String vista = "/empleado/menuPrincipal.jsp";
+        if (request.getSession() != null) {
+            Empleado e = (Empleado) request.getSession().getAttribute("usuario");
+            Long idEmpleado = e.getId_empleado();
+            request.setAttribute("tareas", modeloEmpleado.listaTareasEmpleado(idEmpleado));
         }
-        request.getRequestDispatcher(vista).forward(request, response);
+        getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
