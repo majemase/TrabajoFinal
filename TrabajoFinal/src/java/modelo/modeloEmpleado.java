@@ -5,8 +5,12 @@
 package modelo;
 
 import dao.EmpleadoJpaController;
+import entidades.Departamento;
 import entidades.Empleado;
 import entidades.Tareas;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -24,6 +28,7 @@ public class modeloEmpleado {
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Empleado empleado = ejc.findEmpleado(idEmpleado);
         List<Tareas> tareasEmpleado = empleado.getTareas();
+        emf.close();
         return tareasEmpleado;
     }
 
@@ -31,6 +36,42 @@ public class modeloEmpleado {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         List<Empleado> listaEmpleado = ejc.findEmpleadoEntities();
+        emf.close();
         return listaEmpleado;
+    }
+
+    public static void añadirEmpleado(String nombre, String dni, String pass, Departamento departamento, Cargo cargo, TipoUsuario tipoUsu) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        Empleado e = new Empleado();
+        e.setNombre(nombre);
+        e.setPass(pass);
+        e.setCargo(cargo);
+        e.setDni(dni);
+        e.setDepartamento(departamento);
+        e.setTipoUsuario(tipoUsu);
+        ejc.create(e);
+        emf.close();
+    }
+
+    public static void editarEmpleado(Long id, String pass2) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        Empleado e = ejc.findEmpleado(id);
+        e.setPass(pass2);
+    }
+
+    public static String codificar(String pass) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(pass.getBytes(StandardCharsets.UTF_8));
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(hash[i] & 0xff);
+            if (hex.length() == 1) {
+                hexString.append("0");
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }

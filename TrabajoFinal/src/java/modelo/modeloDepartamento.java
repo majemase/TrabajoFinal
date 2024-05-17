@@ -6,6 +6,7 @@ package modelo;
 
 import dao.DepartamentoJpaController;
 import entidades.Departamento;
+import entidades.Empleado;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -22,6 +23,31 @@ public class modeloDepartamento {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         DepartamentoJpaController djc = new DepartamentoJpaController(emf);
         List<Departamento> listaDepartamento = djc.findDepartamentoEntities();
+        emf.close();
         return listaDepartamento;
+    }
+
+    public static Departamento buscarDepartamentoId(Long id_departamento) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        DepartamentoJpaController djc = new DepartamentoJpaController(emf);
+        List<Departamento> listaDepartamentos = djc.findDepartamentoEntities();
+        for (Departamento departamento : listaDepartamentos) {
+            if (departamento.getId_departamento() == id_departamento) {
+                return departamento;
+            }
+        }
+        return null;
+    }
+
+    public static void añadirDep(String nombre) {
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+            DepartamentoJpaController djc = new DepartamentoJpaController(emf);
+            Departamento d = new Departamento();
+            d.setNombre(nombre);
+            djc.create(d);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

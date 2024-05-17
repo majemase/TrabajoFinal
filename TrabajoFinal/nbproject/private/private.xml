@@ -5,7 +5,11 @@
         <group>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/web/empleado/materiales.jsp</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/controladores/admin/Empleados.java</file>
+            <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/modelo/modeloDepartamento.java</file>
+            <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/modelo/modeloCargo.java</file>
+            <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/modelo/Cargo.java</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/controladores/empleados/Tareas.java</file>
+            <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/modelo/modeloTipoUsuario.java</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/controladores/empleados/MenuPrincipal.java</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/web/header.jsp</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/entidades/Gastos.java</file>
@@ -22,6 +26,7 @@
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/web/empleado/tareas.jsp</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/web/js/main.js</file>
             <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/web/empleado/menuPrincipal.jsp</file>
+            <file>file:/C:/Users/majem/OneDrive/Escritorio/ESTUDIOS/tfg/TrabajoFinal/src/java/modelo/modeloEmpleado.java</file>
         </group>
     </open-files>
 </project-private>

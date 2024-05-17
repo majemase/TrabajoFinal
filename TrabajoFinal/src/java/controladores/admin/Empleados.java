@@ -4,8 +4,12 @@
  */
 package controladores.admin;
 
+import entidades.Departamento;
 import java.io.IOException;
-import java.io.PrintWriter;
+import static java.lang.Long.parseLong;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Cargo;
 import modelo.TipoUsuario;
+import modelo.modeloCargo;
 import modelo.modeloDepartamento;
 import modelo.modeloEmpleado;
+import modelo.modeloTipoUsuario;
 
 /**
  *
@@ -33,12 +39,33 @@ public class Empleados extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NoSuchAlgorithmException {
         String vista = "/admin/empleado.jsp";
         request.setAttribute("tipoUsus", TipoUsuario.values());
         request.setAttribute("cargos", Cargo.values());
         request.setAttribute("departamentos", modeloDepartamento.listaDepartamento());
         request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
+        if (request.getParameter("añadir") != null) {
+            if (request.getParameter("nombre") != null || request.getParameter("dni") != null
+                    || request.getParameter("pass") != null || request.getParameter("dep") != null
+                    || request.getParameter("cargo") != null || request.getParameter("tipoUsu") != null) {
+                String nombre = request.getParameter("nombre");
+                String dni = request.getParameter("dni");
+                String pass = request.getParameter("pass");
+                try {
+                    String passCod = modeloEmpleado.codificar(pass);
+                    Departamento departamento = modeloDepartamento.buscarDepartamentoId(parseLong(request.getParameter("dep")));
+                    Cargo cargo = modeloCargo.buscarCargoStr(request.getParameter("cargo"));
+                    TipoUsuario tipoUsu = modeloTipoUsuario.buscarTipoUsuStr(request.getParameter("tipoUsu"));
+                    modeloEmpleado.añadirEmpleado(nombre, dni, passCod, departamento, cargo, tipoUsu);
+                    response.sendRedirect(request.getContextPath() + "/admin/Empleados");
+                    return;
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                    throw new ServletException("Error al codificar la contraseña", e);
+                }
+            }
+        }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 
@@ -54,7 +81,11 @@ public class Empleados extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -68,7 +99,11 @@ public class Empleados extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Empleados.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

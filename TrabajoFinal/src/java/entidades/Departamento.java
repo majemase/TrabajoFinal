@@ -6,11 +6,11 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -26,8 +26,7 @@ public class Departamento implements Serializable {
     private Long id_departamento;
 
     private String nombre;
-    @OneToMany
-    @JoinColumn(name = "id_departamento")
+    @OneToMany(mappedBy = "departamento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Empleado> empleados;
 
     public String getNombre() {

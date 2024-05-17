@@ -6,6 +6,7 @@ package controladores.empleados;
 
 import entidades.Empleado;
 import java.io.IOException;
+import static java.lang.Long.parseLong;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +38,18 @@ public class MenuPrincipal extends HttpServlet {
             Empleado e = (Empleado) request.getSession().getAttribute("usuario");
             Long idEmpleado = e.getId_empleado();
             request.setAttribute("tareas", modeloEmpleado.listaTareasEmpleado(idEmpleado));
+        }
+        if (request.getParameter("editarAj") != null) {
+            if (request.getParameter("pass2Ajustes") != null) {
+                Long id = parseLong(request.getParameter("idEmpleado"));
+                String pass = request.getParameter("pass");
+                String pass2 = request.getParameter("pass2");
+                if (pass.equals(pass2)) {
+                    modeloEmpleado.editarEmpleado(id, pass2);
+                } else {
+                    request.setAttribute("error", "Las contraseñas no coinciden");
+                }
+            }
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
