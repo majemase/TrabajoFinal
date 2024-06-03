@@ -31,7 +31,7 @@ public class Empleado implements Serializable {
     private Long id_empleado;
 
     private String nombre;
-    private String dni;
+    private String email;
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
     private String pass;
@@ -40,12 +40,7 @@ public class Empleado implements Serializable {
     @JoinColumn(name = "id_departamento")
     private Departamento departamento;
 
-    @ManyToMany
-    @JoinTable(
-            name = "tarea_empleado",
-            joinColumns = @JoinColumn(name = "id_empleado"),
-            inverseJoinColumns = @JoinColumn(name = "id_tarea")
-    )
+    @ManyToMany(mappedBy = "empleados")
     private List<Tareas> tareas;
 
     @Enumerated(EnumType.STRING)
@@ -59,12 +54,12 @@ public class Empleado implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDni() {
-        return dni;
+    public String getEmail() {
+        return email;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Cargo getCargo() {

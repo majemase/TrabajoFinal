@@ -4,14 +4,17 @@
  */
 package controladores.admin;
 
+import entidades.Departamento;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Long.parseLong;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.modeloDepartamento;
+import modelo.modeloEmpleado;
 
 /**
  *
@@ -33,6 +36,7 @@ public class Departamentos extends HttpServlet {
             throws ServletException, IOException {
         String vista = "/admin/departamento.jsp";
         request.setAttribute("departamentos", modeloDepartamento.listaDepartamento());
+        request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
         if (request.getParameter("añadir") != null) {
             if (request.getParameter("nombre") != null) {
                 String nombre = request.getParameter("nombre");
@@ -43,8 +47,12 @@ public class Departamentos extends HttpServlet {
                 }
             }
         }
+        if (request.getParameter("id") != null) {
+            Long idDep = parseLong(request.getParameter("id"));
+            Departamento depEdit = modeloDepartamento.buscarDepartamentoId(idDep);
+            request.setAttribute("depEdit", depEdit);
+        }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

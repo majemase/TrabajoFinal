@@ -30,13 +30,9 @@ public class modeloDepartamento {
     public static Departamento buscarDepartamentoId(Long id_departamento) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         DepartamentoJpaController djc = new DepartamentoJpaController(emf);
-        List<Departamento> listaDepartamentos = djc.findDepartamentoEntities();
-        for (Departamento departamento : listaDepartamentos) {
-            if (departamento.getId_departamento() == id_departamento) {
-                return departamento;
-            }
-        }
-        return null;
+        Departamento d = djc.findDepartamento(id_departamento);
+        emf.close();
+        return d;
     }
 
     public static void añadirDep(String nombre) {
@@ -46,6 +42,7 @@ public class modeloDepartamento {
             Departamento d = new Departamento();
             d.setNombre(nombre);
             djc.create(d);
+            emf.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

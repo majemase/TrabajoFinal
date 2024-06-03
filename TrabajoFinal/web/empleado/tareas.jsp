@@ -21,7 +21,47 @@
         <%@ include file="../header.jsp" %>
         <section class="p-3">
             <article>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
+                    Añadir tarea
+                </button>
 
+                <!-- Modal -->
+                <div class="modal fade" id="addDep" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="addModalLabel">Añadir Tarea</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="../empleado/Tareas" method="POST">
+                                    <div class="mb-3">
+                                        <label for="desc" class="form-label">Descripción</label>
+                                        <textarea id="desc" class="form-control" name="desc" rows="5" cols="10"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="fecha" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" name="fecha" id="fecha">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="empleado" class="form-label">Empleados</label>
+                                        <select class="form-select" name="listaEmpleado" multiple aria-label="Multiple select example">
+                                            <c:forEach var="empleado" items="${empleados}">
+                                                <option value="${empleado.id_empleado}">${empleado.nombre} - ${empleado.departamento.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <input type="hidden" name="añadir" value="true"/>
+                                    <div class="d-flex justify-content-end gap-3">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Añadir Tarea</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </article>
         </section>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

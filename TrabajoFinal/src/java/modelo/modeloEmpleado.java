@@ -40,14 +40,14 @@ public class modeloEmpleado {
         return listaEmpleado;
     }
 
-    public static void añadirEmpleado(String nombre, String dni, String pass, Departamento departamento, Cargo cargo, TipoUsuario tipoUsu) {
+    public static void añadirEmpleado(String nombre, String email, String pass, Departamento departamento, Cargo cargo, TipoUsuario tipoUsu) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Empleado e = new Empleado();
         e.setNombre(nombre);
         e.setPass(pass);
         e.setCargo(cargo);
-        e.setDni(dni);
+        e.setEmail(email);
         e.setDepartamento(departamento);
         e.setTipoUsuario(tipoUsu);
         ejc.create(e);
@@ -73,5 +73,13 @@ public class modeloEmpleado {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public static Empleado buscarEmpleadoId(Long id_empleado) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        Empleado e = ejc.findEmpleado(id_empleado);
+        emf.close();
+        return e;
     }
 }

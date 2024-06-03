@@ -46,18 +46,18 @@ public class Empleados extends HttpServlet {
         request.setAttribute("departamentos", modeloDepartamento.listaDepartamento());
         request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
         if (request.getParameter("añadir") != null) {
-            if (request.getParameter("nombre") != null || request.getParameter("dni") != null
+            if (request.getParameter("nombre") != null || request.getParameter("email") != null
                     || request.getParameter("pass") != null || request.getParameter("dep") != null
                     || request.getParameter("cargo") != null || request.getParameter("tipoUsu") != null) {
                 String nombre = request.getParameter("nombre");
-                String dni = request.getParameter("dni");
+                String email = request.getParameter("email");
                 String pass = request.getParameter("pass");
                 try {
                     String passCod = modeloEmpleado.codificar(pass);
                     Departamento departamento = modeloDepartamento.buscarDepartamentoId(parseLong(request.getParameter("dep")));
                     Cargo cargo = modeloCargo.buscarCargoStr(request.getParameter("cargo"));
                     TipoUsuario tipoUsu = modeloTipoUsuario.buscarTipoUsuStr(request.getParameter("tipoUsu"));
-                    modeloEmpleado.añadirEmpleado(nombre, dni, passCod, departamento, cargo, tipoUsu);
+                    modeloEmpleado.añadirEmpleado(nombre, email, passCod, departamento, cargo, tipoUsu);
                     response.sendRedirect(request.getContextPath() + "/admin/Empleados");
                     return;
                 } catch (NoSuchAlgorithmException e) {

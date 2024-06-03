@@ -33,6 +33,7 @@ public class Tareas implements Serializable {
     private String descripcion;
     private Date fecha_inicio;
     private Date fecha_fin;
+    private Date fecha;
     @Enumerated(EnumType.STRING)
     private Estado estado;
     @ManyToMany
@@ -55,6 +56,14 @@ public class Tareas implements Serializable {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public void setDescripcion(String descripcion) {

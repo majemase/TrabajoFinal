@@ -18,7 +18,7 @@ public class modeloLogin {
 
     static final String PU = "TrabajoFinalPU";
 
-    public static Empleado validarEmpleado(String dni, String pass) {
+    public static Empleado validarEmpleado(String email, String pass) {
         Empleado e = null;
         EntityManagerFactory emf = new Persistence().createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
@@ -26,7 +26,7 @@ public class modeloLogin {
         boolean encontrado = false;
         for (int i = 0; i < empleados.size() && !encontrado; i++) {
             Empleado actual = empleados.get(i);
-            if (actual.getDni().equals(dni)) {
+            if (actual.getEmail().equals(email)) {
                 encontrado = true;
                 if (actual.getPass().equals(pass)) {
                     e = actual;

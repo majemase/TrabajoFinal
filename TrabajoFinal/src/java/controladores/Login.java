@@ -35,10 +35,10 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String vista = "/login.jsp";
-        String dni = request.getParameter("dni");
+        String email = request.getParameter("email");
         String pass = request.getParameter("pass");
-        if (dni != null && pass != null && !dni.trim().isEmpty() && !pass.trim().isEmpty()) {
-            Empleado e = modeloLogin.validarEmpleado(dni, pass);
+        if (email != null && pass != null && !email.trim().isEmpty() && !pass.trim().isEmpty()) {
+            Empleado e = modeloLogin.validarEmpleado(email, pass);
             if (e != null) {
                 HttpSession sesion = request.getSession();
                 sesion.setAttribute("usuario", e);

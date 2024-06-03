@@ -40,8 +40,8 @@
                                         <input type="text" class="form-control" name="nombre" id="nombre">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="dni" class="form-label">DNI</label>
-                                        <input type="text" class="form-control" name="dni" id="dni">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" name="email" id="email">
                                     </div>
                                     <div class="mb-3">
                                         <label for="pass" class="form-label">Contraseña</label>
@@ -86,11 +86,11 @@
                     <thead>
                         <tr>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Contraseña</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cargo</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departamento</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">TipoUsuario</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,12 +103,8 @@
                                 </td>
                                 <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold">
-                                        ${empleado.dni}
+                                        ${empleado.email}
                                     </span>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <span class="text-secondary text-xs font-weight-bold">
-                                        ${empleado.pass}
                                 </td>
                                 <td class="align-middle text-center">
                                     <span class="text-secondary text-xs font-weight-bold">
@@ -125,48 +121,89 @@
                                         ${empleado.tipoUsuario}
                                     </span>
                                 </td>
+                                <td class="align-middle text-center">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" onclick="verDep(${departamento.id_departamento})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarDep">
+                                        Editar
+                                    </button>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">DNI</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Contraseña</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Cargo</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Departamento</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">TipoUsuario</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
                         </tr>
                     </tfoot>
                 </table>
             </article>
         </section>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
-        <script>
-            $(document).ready(function () {
-            $('#tablaEmpleados').DataTable({
-            "searching": true, // Habilitar o deshabilitar el buscador
-                    "paging": true, // Habilitar o deshabilitar la paginación
-                    "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                    "pageLength": 10, // Número predeterminado de registros por página
-                    "language": {// Personalizar el texto mostrado
-                    "search": "Buscar:",
-                            "lengthMenu": "Mostrar _MENU_ registros por página",
-                            "zeroRecords": "No se encontraron resultados",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                            "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                            "paginate": {
-                            "first": "<<",
-                                    "last": ">>",
-                                    "next": ">",
-                                    "previous": "<"
-                            }
-                    }
-            });
-            });
-                    </body>
-            </html>
+        <!-- Modal -->
+        <div class="modal fade" id="editarEmpl" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editarModalLabel">Editar Empleado</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Departamentos" method="POST">
+                            <div class="mb-3">
+                                <label for="nombreEdit" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" id="nombreEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="emailEdit" class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" id="emailEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="passEdit" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" name="pass" id="passEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cargoEdit" class="form-label">Cargo</label>
+
+                            </div>
+                            <input type="hidden" name="idDep" id="idDep" value="true"/>
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+            <script>
+                                        $(document).ready(function () {
+                                        $('#tablaEmpleados').DataTable({
+                                        "searching": true, // Habilitar o deshabilitar el buscador
+                                                "paging": true, // Habilitar o deshabilitar la paginación
+                                                "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                                "pageLength": 10, // Número predeterminado de registros por página
+                                                "language": {// Personalizar el texto mostrado
+                                                "search": "Buscar:",
+                                                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                        "zeroRecords": "No se encontraron resultados",
+                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                        "paginate": {
+                                                        "first": "<<",
+                                                                "last": ">>",
+                                                                "next": ">",
+                                                                "previous": "<"
+                                                        }
+                                                }
+                                        });
+                                        });
+                                                </body>
+                                                </html>

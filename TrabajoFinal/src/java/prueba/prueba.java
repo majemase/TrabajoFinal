@@ -50,7 +50,7 @@ public class prueba extends HttpServlet {
         e.setPuntos_productividad(9999);
         e.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
         e.setCargo(Cargo.JEFE);
-        e.setDni("77858702E");
+        e.setEmail("majemase12@gmail.com");
         ejc.create(e);
     }
 

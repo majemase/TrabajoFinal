@@ -9,6 +9,7 @@
         <title>ProductivityTrack - Departamentos</title>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
         <%@include file="../header.jsp" %>
@@ -51,6 +52,7 @@
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jefe departamento</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Empleados</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,6 +78,12 @@
                                         </c:if>
                                     </c:forEach>
                                 </td>
+                                <td class="align-middle text-center">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" onclick="verDep(${departamento.id_departamento})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarDep">
+                                        Editar
+                                    </button>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -84,38 +92,83 @@
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jefe departamento</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Empleados</th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
                         </tr>
                     </tfoot>
                 </table>
             </article>
         </section>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#tablaDep').DataTable({
-                    "searching": true,
-                    "paging": true,
-                    "lengthMenu": [5, 10, 25, 50],
-                    "pageLength": 10,
-                    "language": {
-                        "search": "Buscar:",
-                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                        "zeroRecords": "No se encontraron resultados",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                        "paginate": {
-                            "first": "<<",
-                            "last": ">>",
-                            "next": ">",
-                            "previous": "<"
-                        }
-                    }
-                });
-            });
-        </script>
+        <!-- Modal -->
+        <div class="modal fade" id="editarDep" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editarModalLabel">Añadir Departamento</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Departamentos" method="POST">
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" id="nombreEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="jefeDep">Jefe de departamento</label>
+                                <select name="jefeDep" id="jefeDep" class="form-select" aria-label="Cargo">
+                                    <c:forEach var="empleado" items="${depEdit.empleados}">
+                                        <c:if test="${empleado.cargo eq 'JEFEDEPARTAMENTO' or empleado.cargo eq 'JEFE'}">
+                                            <span class="text-secondary text-xs font-weight-bold">${empleado.nombre}</span>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="empleadosDep" class="form-label">Empleados del departamento</label>
+                                <select class="form-select" name="empleadosDep" id="empleadosDep" multiple aria-label="Multiple select example">
+                                    <c:forEach var="empleadoDep" varStatus="ultimoEmpleado" items="${depEdit.empleados}">
+                                        <c:forEach var="empleado" items="${empleadoDep}">
+                                            <option value="${empleadoDep.id_empleado}" <c:if test="${empleadoDep.id_empleado eq empleado.id_empleado}">selected=""</c:if>>${empleadoDep.nombre}</option>
+                                        </c:forEach>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <input type="hidden" name="idDep" id="idDep" value="true"/>
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+            <script>
+                                        $(document).ready(function () {
+                                            $('#tablaDep').DataTable({
+                                                "searching": true,
+                                                "paging": true,
+                                                "lengthMenu": [5, 10, 25, 50],
+                                                "pageLength": 10,
+                                                "language": {
+                                                    "search": "Buscar:",
+                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                    "zeroRecords": "No se encontraron resultados",
+                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                    "paginate": {
+                                                        "first": "<<",
+                                                        "last": ">>",
+                                                        "next": ">",
+                                                        "previous": "<"
+                                                    }
+                                                }
+                                            });
+                                        });
+            </script>
+            <script src="../js/main.js"></script>
     </body>
 </html>

@@ -4,13 +4,19 @@
  */
 package controladores.empleados;
 
+import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.modeloEmpleado;
+import modelo.modeloTareas;
 
 /**
  *
@@ -31,6 +37,17 @@ public class Tareas extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String vista = "/empleado/tareas.jsp";
+        request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
+        if (request.getParameter("añadir") != null) {
+            String desc = request.getParameter("desc");
+            String fecha = request.getParameter("fecha");
+            String[] listaEmpleado = request.getParameterValues("listaEmpleado");
+            try {
+                modeloTareas.añadirTarea(desc, listaEmpleado, fecha);
+            } catch (ParseException ex) {
+                Logger.getLogger(Tareas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 

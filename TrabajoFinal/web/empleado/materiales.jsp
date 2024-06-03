@@ -20,7 +20,43 @@
         <%@ include file="../header.jsp" %>
         <section class="p-3">
             <article>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
+                    Añadir materiales
+                </button>
 
+                <!-- Modal -->
+                <div class="modal fade" id="addDep" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="addModalLabel">Añadir Materiales</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="../empleado/Materiales" method="POST">
+                                    <div class="mb-3">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" name="nombre" id="nombre">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="precio" class="form-label">Precio</label>
+                                        <input type="text" name="precio" id="precio">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="stock" class="form-label">Stock</label>
+                                        <input type="text" name="stock" id="stock">
+                                    </div>
+                                    <input type="hidden" name="añadir" value="true"/>
+                                    <div class="d-flex justify-content-end gap-3">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Añadir Material</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </article>
         </section>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

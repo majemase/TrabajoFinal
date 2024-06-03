@@ -31,6 +31,7 @@ public class Materiales extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String vista = "/empleado/materiales.jsp";
+        
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 

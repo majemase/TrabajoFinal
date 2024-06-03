@@ -21,3 +21,17 @@ function validarLogin(event) {
         event.preventDefault();
     }
 }
+
+function verDep(departmentId) {
+    $.ajax({
+        type: 'POST',
+        url: '/TrabajoFinal/admin/Departamentos',
+        data: {id: departmentId},
+        success: function (response) {
+            alert(response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error en la solicitud: ' + error);
+        }
+    });
+}
