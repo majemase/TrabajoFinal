@@ -10,6 +10,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <%@include file="../header.jsp" %>
@@ -66,7 +68,7 @@
                                 <td class="align-middle text-center">
                                     <c:forEach var="empleado" items="${departamento.empleados}">
                                         <c:if test="${empleado.cargo eq 'JEFEDEPARTAMENTO' or empleado.cargo eq 'JEFE'}">
-                                            <span class="text-secondary text-xs font-weight-bold">${empleado.nombre} (${empleado.cargo})</span>
+                                            <span class="text-secondary text-xs font-weight-bold">${empleado.nombre}</span>
                                         </c:if>
                                     </c:forEach>
                                 </td>
@@ -81,7 +83,10 @@
                                 <td class="align-middle text-center">
                                     <!-- Button trigger modal -->
                                     <button type="button" onclick="verDep(${departamento.id_departamento})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarDep">
-                                        Editar
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button type="button" onclick="confirmaDel(${departamento.id_departamento})" class="btn btn-primary">
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -115,27 +120,23 @@
                             <div class="mb-3">
                                 <label for="jefeDep">Jefe de departamento</label>
                                 <select name="jefeDep" id="jefeDep" class="form-select" aria-label="Cargo">
-                                    <c:forEach var="empleado" items="${depEdit.empleados}">
-                                        <c:if test="${empleado.cargo eq 'JEFEDEPARTAMENTO' or empleado.cargo eq 'JEFE'}">
-                                            <span class="text-secondary text-xs font-weight-bold">${empleado.nombre}</span>
-                                        </c:if>
+                                    <c:forEach var="empleado" items="${empleados}">
+                                        <option value="${empleado.id_empleado}" id="jefeDep-${empleado.id_empleado}">${empleado.nombre}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="empleadosDep" class="form-label">Empleados del departamento</label>
-                                <select class="form-select" name="empleadosDep" id="empleadosDep" multiple aria-label="Multiple select example">
-                                    <c:forEach var="empleadoDep" varStatus="ultimoEmpleado" items="${depEdit.empleados}">
-                                        <c:forEach var="empleado" items="${empleadoDep}">
-                                            <option value="${empleadoDep.id_empleado}" <c:if test="${empleadoDep.id_empleado eq empleado.id_empleado}">selected=""</c:if>>${empleadoDep.nombre}</option>
-                                        </c:forEach>
+                                <select name="empleadosDep" id="empleadosDep" class="form-select" multiple aria-label="Multiple select example">
+                                    <c:forEach var="empleado" items="${empleados}">
+                                        <option value="${empleado.id_empleado}" id="empleadoDep-${empleado.id_empleado}">${empleado.nombre}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <input type="hidden" name="idDep" id="idDep" value="true"/>
                             <div class="d-flex justify-content-end gap-3">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Editar</button>
+                                <button type="submit" value="editar" class="btn btn-primary">Editar</button>
                             </div>
                         </form>
                     </div>

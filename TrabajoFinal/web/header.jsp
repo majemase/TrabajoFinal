@@ -4,12 +4,7 @@
     Author     : majemase
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- 
-    Document   : header
-    Created on : 10 may 2024, 17:10:53
-    Author     : majemase
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
@@ -24,20 +19,20 @@
                 <div class="navbar-nav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/TrabajoFinal/empleado/MenuPrincipal">Inicio</a>
+                            <a class="nav-link" href="/TrabajoFinal/empleado/MenuPrincipal">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/TrabajoFinal/empleado/Tareas">Tareas</a>
+                            <a class="nav-link" href="/TrabajoFinal/empleado/Tareas">Tareas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/TrabajoFinal/empleado/Materiales">Materiales</a>
+                            <a class="nav-link" href="/TrabajoFinal/empleado/Materiales">Materiales</a>
                         </li>
                         <c:if test="${usuario.tipoUsuario eq TipoUsuario.ADMINISTRADOR}">
                             <li class="nav-item">
-                                <a class="nav-link" href="http://localhost:8080/TrabajoFinal/admin/Empleados">Empleados</a>
+                                <a class="nav-link" href="/TrabajoFinal/admin/Empleados">Empleados</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="http://localhost:8080/TrabajoFinal/admin/Departamentos">Departamentos</a>
+                                <a class="nav-link" href="/TrabajoFinal/admin/Departamentos">Departamentos</a>
                             </li>
                         </c:if>
                         <li class="nav-item dropdown">
@@ -48,10 +43,10 @@
                                 <li>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Ajustes
+                                        <i class="fa-solid fa-gears"></i> Ajustes
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item" href="../CerrarSesion">Cerrar sesión</a></li>
+                                <li><a class="dropdown-item" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>

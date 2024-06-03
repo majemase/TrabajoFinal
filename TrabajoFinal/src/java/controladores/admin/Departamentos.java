@@ -8,6 +8,8 @@ import entidades.Departamento;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Long.parseLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,10 +49,17 @@ public class Departamentos extends HttpServlet {
                 }
             }
         }
-        if (request.getParameter("id") != null) {
-            Long idDep = parseLong(request.getParameter("id"));
-            Departamento depEdit = modeloDepartamento.buscarDepartamentoId(idDep);
-            request.setAttribute("depEdit", depEdit);
+        if (request.getParameter("editar") != null) {
+            String nombre = request.getParameter("nombre");
+            String[] empleados = request.getParameterValues("empleadosDep");
+            try {
+                modeloDepartamento.editarDep(nombre, empleados, request.getParameter("jefeDep"), parseLong(request.getParameter("idDep")));
+            } catch (Exception ex) {
+                Logger.getLogger(Departamentos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (request.getParameter("eliminar") != null) {
+            modeloDepartamento.eliminarDepartamento(parseLong(request.getParameter("id")));
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

@@ -11,6 +11,9 @@ import entidades.Departamento;
 import entidades.Empleado;
 import entidades.Tareas;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletException;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import modelo.Cargo;
 import modelo.Estado;
 import modelo.TipoUsuario;
+import modelo.modeloEmpleado;
 
 /**
  *
@@ -46,12 +50,18 @@ public class prueba extends HttpServlet {
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Empleado e = new Empleado();
         e.setNombre("majemase");
-        e.setPass("majemaseAdmin");
-        e.setPuntos_productividad(9999);
-        e.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
-        e.setCargo(Cargo.JEFE);
-        e.setEmail("majemase12@gmail.com");
-        ejc.create(e);
+        String pass;
+        try {
+            pass = modeloEmpleado.codificar("majemaseAdmin");
+            e.setPass(pass);
+            e.setPuntos_productividad(9999);
+            e.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
+            e.setCargo(Cargo.JEFE);
+            e.setEmail("majemase12@gmail.com");
+            ejc.create(e);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -25,13 +25,48 @@ function validarLogin(event) {
 function verDep(departmentId) {
     $.ajax({
         type: 'POST',
-        url: '/TrabajoFinal/admin/Departamentos',
+        url: '/TrabajoFinal/admin/verDep',
         data: {id: departmentId},
         success: function (response) {
-            alert(response);
+            $("#nombreEdit").val(response.nombre);
+            $("#jefeDep-" + response.jefeDepartamento.id).prop('selected', true);
+            response.empleados.forEach(function (empleado) {
+                $("#empleadoDep-" + empleado.id).prop('selected', true);
+            });
+            $("#idDep").val(response.id);
         },
         error: function (xhr, status, error) {
             console.error('Error en la solicitud: ' + error);
+        }
+    });
+}
+
+function confirmaDel(departmentId) {
+    Swal.fire({
+        title: "¿Seguro?",
+        text: "¿Desea eliminar el departamento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '/TrabajoFinal/admin/Departamentos',
+                data: {id: departmentId, eliminar: "eliminar"},
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No se ha podido eliminar el departamento"
+                    });
+                }
+            });
         }
     });
 }

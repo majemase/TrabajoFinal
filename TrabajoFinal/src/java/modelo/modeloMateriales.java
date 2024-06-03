@@ -6,6 +6,7 @@ package modelo;
 
 import dao.MaterialesJpaController;
 import entidades.Materiales;
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -17,7 +18,7 @@ public class modeloMateriales {
 
     final static String PU = "TrabajoFinalPU";
 
-    public static void añadirMateriales(String nombre, Long precio, int stock) {
+    public static void añadirMateriales(String nombre, double precio, int stock) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         MaterialesJpaController mjc = new MaterialesJpaController(emf);
         Materiales m = new Materiales();
@@ -26,5 +27,11 @@ public class modeloMateriales {
         m.setStock(stock);
         mjc.create(m);
         emf.close();
+    }
+
+    public static List<Materiales> listarMateriales() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        MaterialesJpaController mjc = new MaterialesJpaController(emf);
+        return mjc.findMaterialesEntities();
     }
 }

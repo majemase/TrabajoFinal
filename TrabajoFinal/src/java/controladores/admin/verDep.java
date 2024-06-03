@@ -2,30 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controladores;
+package controladores.admin;
 
+import entidades.Departamento;
 import entidades.Empleado;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
+import static java.lang.Long.parseLong;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import modelo.Cargo;
 import modelo.modeloDepartamento;
-import modelo.modeloEmpleado;
-import modelo.modeloLogin;
 
 /**
  *
  * @author majemase
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "mod", urlPatterns = {"/admin/verDep"})
+public class verDep extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,34 +36,47 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vista = "/login.jsp";
-        String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-        if (email != null && pass != null && !email.trim().isEmpty() && !pass.trim().isEmpty()) {
-            Empleado e;
-            try {
-                String passCod = modeloEmpleado.codificar(pass);
-                System.out.println("-----------------------------------------------------");
-                System.out.println(passCod);
-                System.out.println("-----------------------------------------------------");
-                e = modeloLogin.validarEmpleado(email, passCod);
-                if (e != null) {
-                    HttpSession sesion = request.getSession();
-                    sesion.setAttribute("usuario", e);
-                    sesion.setAttribute("error", "");
-                    sesion.setAttribute("listaDepartamento", modeloDepartamento.listaDepartamento());
-                    sesion.setAttribute("listaCargos", Cargo.values());
-                    response.sendRedirect("empleado/MenuPrincipal");
-                    return;
-                } else {
-                    String error = "Nombre o contraseña incorrectos";
-                    request.setAttribute("error", error);
-                }
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        Long departamentoId = Long.parseLong(request.getParameter("id"));
+        Departamento departamento = modeloDepartamento.verDepartamento(departamentoId);
+
+        // Construir el JSON manualmente
+        String jsonDepartamento = "{";
+        jsonDepartamento += "\"id\": \"" + departamento.getId_departamento() + "\",";
+        jsonDepartamento += "\"nombre\": \"" + departamento.getNombre() + "\",";
+        jsonDepartamento += "\"jefeDepartamento\": null,"; // Inicialmente establecemos al jefe de departamento como null
+
+// Agregar la lista de empleados
+        jsonDepartamento += "\"empleados\": [";
+        List<Empleado> empleados = departamento.getEmpleados();
+        for (int i = 0; i < empleados.size(); i++) {
+            Empleado empleado = empleados.get(i);
+            jsonDepartamento += "{";
+            jsonDepartamento += "\"id\": \"" + empleado.getId_empleado() + "\",";
+            jsonDepartamento += "\"nombre\": \"" + empleado.getNombre() + "\",";
+            jsonDepartamento += "\"cargo\": \"" + empleado.getCargo() + "\"";
+            jsonDepartamento += "}";
+            if (i < empleados.size() - 1) {
+                jsonDepartamento += ",";
             }
         }
-        getServletContext().getRequestDispatcher(vista).forward(request, response);
+        jsonDepartamento += "]";
+
+        jsonDepartamento += "}";
+
+// Buscar al jefe de departamento
+        for (Empleado empleado : empleados) {
+            if (empleado.getCargo() == Cargo.JEFEDEPARTAMENTO) {
+                // Si encontramos al jefe de departamento, lo agregamos al JSON
+                jsonDepartamento = jsonDepartamento.replace("\"jefeDepartamento\": null",
+                        "\"jefeDepartamento\": {\"id\": \"" + empleado.getId_empleado() + "\", \"nombre\": \"" + empleado.getNombre() + "\"}");
+                break;
+            }
+        }
+
+        // Enviar el JSON como respuesta al cliente
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonDepartamento);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

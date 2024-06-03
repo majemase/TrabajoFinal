@@ -6,11 +6,14 @@ package controladores.empleados;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.modeloMateriales;
 
 /**
  *
@@ -31,7 +34,14 @@ public class Materiales extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String vista = "/empleado/materiales.jsp";
-        
+        request.setAttribute("materiales", modeloMateriales.listarMateriales());
+        if (request.getParameter("añadir") != null) {
+            String nombre = request.getParameter("nombre");
+            double precio = Double.parseDouble(request.getParameter("precio"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            modeloMateriales.añadirMateriales(nombre, precio, stock);
+
+        }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 
