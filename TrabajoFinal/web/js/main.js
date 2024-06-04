@@ -70,3 +70,63 @@ function confirmaDel(departmentId) {
         }
     });
 }
+
+function confirmaDelEmp(empleadoId) {
+    Swal.fire({
+        title: "¿Seguro?",
+        text: "¿Desea eliminar el departamento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '/TrabajoFinal/admin/Empleados',
+                data: {id: empleadoId, eliminar: "eliminar"},
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No se ha podido eliminar el departamento"
+                    });
+                }
+            });
+        }
+    });
+}
+
+function confirmaDelMat(materialId) {
+    Swal.fire({
+        title: "¿Seguro?",
+        text: "¿Desea eliminar el departamento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '/TrabajoFinal/empleado/Materiales',
+                data: {id: materialId, eliminar: "eliminar"},
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No se ha podido eliminar el departamento"
+                    });
+                }
+            });
+        }
+    });
+}

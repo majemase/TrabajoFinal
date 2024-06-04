@@ -66,6 +66,9 @@ public class Empleados extends HttpServlet {
                 }
             }
         }
+        if (request.getParameter("eliminar") != null) {
+            modeloEmpleado.delEmp(parseLong(request.getParameter("id")));
+        }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }
 

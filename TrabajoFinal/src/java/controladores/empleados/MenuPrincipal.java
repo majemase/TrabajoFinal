@@ -40,15 +40,12 @@ public class MenuPrincipal extends HttpServlet {
             request.setAttribute("tareas", modeloEmpleado.listaTareasEmpleado(idEmpleado));
         }
         if (request.getParameter("editarAj") != null) {
-            if (request.getParameter("pass2Ajustes") != null) {
-                Long id = parseLong(request.getParameter("idEmpleado"));
-                String pass = request.getParameter("pass");
-                String pass2 = request.getParameter("pass2");
-                if (pass.equals(pass2)) {
-                    modeloEmpleado.editarEmpleado(id, pass2);
-                } else {
-                    request.setAttribute("error", "Las contraseñas no coinciden");
-                }
+            Long id = parseLong(request.getParameter("idEmpleado"));
+            String pass = request.getParameter("pass");
+            if (pass.equals(pass)) {
+                modeloEmpleado.editarEmpleado(id, pass);
+            } else {
+                request.setAttribute("error", "Las contraseñas no coinciden");
             }
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);

@@ -39,6 +39,15 @@ public class Materiales implements Serializable {
     @OneToMany
     @JoinColumn(name = "id_material")
     private List<Gastos> gastos;
+    private boolean aprobado;
+
+    public boolean isAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(boolean aprobado) {
+        this.aprobado = aprobado;
+    }
 
     public String getNombre() {
         return nombre;

@@ -78,15 +78,12 @@ public class modeloDepartamento {
         }
         e = ejc.findEmpleado(parseLong(jefeDep));
         e.setCargo(Cargo.JEFEDEPARTAMENTO);
+        ejc.edit(e);
         listEmpleados.add(e);
         d.setNombre(nombre);
         d.setEmpleados(listEmpleados);
-        try {
-            djc.edit(d);
-            emf.close();
-        } catch (Exception ex) {
-            Logger.getLogger(modeloDepartamento.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        djc.edit(d);
+        emf.close();
     }
 
     public static void eliminarDepartamento(Long id) {

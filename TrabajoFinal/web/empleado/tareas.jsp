@@ -22,11 +22,12 @@
         <%@ include file="../header.jsp" %>
         <section class="p-3">
             <article>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
-                    Añadir tarea
-                </button>
-
+                <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR'}">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
+                        Añadir tarea
+                    </button>
+                </c:if>
                 <!-- Modal -->
                 <div class="modal fade" id="addDep" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                     <div class="modal-dialog">

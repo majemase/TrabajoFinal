@@ -5,6 +5,7 @@
 package modelo;
 
 import dao.EmpleadoJpaController;
+import dao.exceptions.NonexistentEntityException;
 import entidades.Departamento;
 import entidades.Empleado;
 import entidades.Tareas;
@@ -12,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -54,11 +57,17 @@ public class modeloEmpleado {
         emf.close();
     }
 
-    public static void editarEmpleado(Long id, String pass2) {
+    public static void editarEmpleado(Long id, String pass) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Empleado e = ejc.findEmpleado(id);
-        e.setPass(pass2);
+        e.setPass(pass);
+        try {
+            ejc.edit(e);
+            emf.close();
+        } catch (Exception ex) {
+            Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static String codificar(String pass) throws NoSuchAlgorithmException {
@@ -81,5 +90,16 @@ public class modeloEmpleado {
         Empleado e = ejc.findEmpleado(id_empleado);
         emf.close();
         return e;
+    }
+
+    public static void delEmp(Long id_empleado) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        try {
+            ejc.destroy(id_empleado);
+            emf.close();
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

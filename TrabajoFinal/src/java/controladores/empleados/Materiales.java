@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.TipoUsuario;
 import modelo.modeloMateriales;
 
 /**
@@ -39,8 +40,16 @@ public class Materiales extends HttpServlet {
             String nombre = request.getParameter("nombre");
             double precio = Double.parseDouble(request.getParameter("precio"));
             int stock = Integer.parseInt(request.getParameter("stock"));
-            modeloMateriales.añadirMateriales(nombre, precio, stock);
-
+            if (TipoUsuario.ADMINISTRADOR.equals(request.getSession().getAttribute("tipoUsuario"))) {
+                modeloMateriales.añadirMateriales(nombre, precio, stock, true);
+            } else {
+                modeloMateriales.añadirMateriales(nombre, precio, stock, false);
+            }
+            response.sendRedirect(request.getContextPath() + "/empleado/Materiales");
+            return;
+        }
+        if (request.getParameter("eliminar") != null) {
+            modeloMateriales.delMat(parseLong(request.getParameter("id")));
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

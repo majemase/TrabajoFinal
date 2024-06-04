@@ -13,108 +13,115 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body class="bg-secondary">
         <%@include file="../header.jsp" %>
-        <section class="p-3">
-            <article class="mb-3">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
-                    Añadir departamento
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="addDep" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="addModalLabel">Añadir Departamento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="/TrabajoFinal/admin/Departamentos" method="POST">
-                                    <div class="mb-3">
-                                        <label for="nombre" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre">
-                                    </div>
-                                    <input type="hidden" name="añadir" value="true"/>
-                                    <div class="d-flex justify-content-end gap-3">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-primary">Añadir departamento</button>
-                                    </div>
-                                </form>
-                            </div>
+        <section class="container py-3">
+            <div class="row justify-content-center">
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
+                        Añadir departamento
+                    </button>
+                </div>
+            </div>
+            <!-- Modal Añadir Departamento -->
+            <div class="modal fade" id="addDep" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addModalLabel">Añadir Departamento</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/TrabajoFinal/admin/Departamentos" method="POST">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" name="nombre" id="nombre">
+                                </div>
+                                <input type="hidden" name="añadir" value="true"/>
+                                <div class="d-flex justify-content-end gap-3">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Añadir departamento</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <article class="mt-4">
+                <div class="card bg-dark text-white shadow-sm">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tablaDep" class="table table-striped table-bordered align-items-center mb-0">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Jefe departamento</th>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Empleados</th>
+                                            <c:if test="${usuario.tipoUsuario == 'ADMINISTRADOR'}">
+                                            <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                            </c:if>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="departamento" items="${departamentos}">
+                                        <tr>
+                                            <td class="align-middle text-center">
+                                                <span class="text-sm">${departamento.nombre}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <c:forEach var="empleado" items="${departamento.empleados}">
+                                                    <c:if test="${empleado.cargo eq 'JEFEDEPARTAMENTO' or empleado.cargo eq 'JEFE'}">
+                                                        <span class="text-light text-black text-xs font-weight-bold">${empleado.nombre}</span>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <c:forEach var="empleado" varStatus="ultimoEmpleado" items="${departamento.empleados}">
+                                                    <span class="text-light text-black text-xs font-weight-bold">${empleado.nombre}</span>
+                                                    <c:if test="${not ultimoEmpleado.last}">, </c:if>
+                                                </c:forEach>
+                                            </td>
+                                            <c:if test="${usuario.tipoUsuario == 'ADMINISTRADOR'}">
+                                                <td class="align-middle text-center">
+                                                    <button type="button" onclick="verDep(${departamento.id_departamento})" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarDep">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                    </button>
+                                                    <button type="button" onclick="confirmaDel(${departamento.id_departamento})" class="btn btn-danger btn-sm">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </c:if>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                                <tfoot class="table-dark">
+                                    <tr>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Jefe departamento</th>
+                                        <th class="text-center text-uppercase text-light font-weight-bold">Empleados</th>
+                                            <c:if test="${usuario.tipoUsuario == 'ADMINISTRADOR'}">
+                                            <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                            </c:if>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
             </article>
-            <article>
-                <table id="tablaDep" class="table align-items-center mb-0">
-                    <thead class="align-bottom">
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jefe departamento</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Empleados</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="departamento" items="${departamentos}">
-                            <tr>
-                                <td class="align-middle text-center">
-                                    <div class="d-flex px-2 py-1 justify-content-center">
-                                        <span class="text-sm">${departamento.nombre}</span>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <c:forEach var="empleado" items="${departamento.empleados}">
-                                        <c:if test="${empleado.cargo eq 'JEFEDEPARTAMENTO' or empleado.cargo eq 'JEFE'}">
-                                            <span class="text-secondary text-xs font-weight-bold">${empleado.nombre}</span>
-                                        </c:if>
-                                    </c:forEach>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <c:forEach var="empleado" varStatus="ultimoEmpleado" items="${departamento.empleados}">
-                                        <span class="text-secondary text-xs font-weight-bold">${empleado.nombre}</span>
-                                        <c:if test="${not ultimoEmpleado.last}">
-                                            ,
-                                        </c:if>
-                                    </c:forEach>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" onclick="verDep(${departamento.id_departamento})" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarDep">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
-                                    <button type="button" onclick="confirmaDel(${departamento.id_departamento})" class="btn btn-primary">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Nombre</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Jefe departamento</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Empleados</th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Opciones</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </article>
         </section>
-        <!-- Modal -->
+        <!-- Modal Editar Departamento -->
         <div class="modal fade" id="editarDep" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editarModalLabel">Añadir Departamento</h1>
+                        <h1 class="modal-title fs-5" id="editarModalLabel">Editar Departamento</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form action="Departamentos" method="POST">
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
+                                <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
                             </div>
                             <div class="mb-3">
@@ -142,34 +149,35 @@
                     </div>
                 </div>
             </div>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
-            <script>
-                                        $(document).ready(function () {
-                                            $('#tablaDep').DataTable({
-                                                "searching": true,
-                                                "paging": true,
-                                                "lengthMenu": [5, 10, 25, 50],
-                                                "pageLength": 10,
-                                                "language": {
-                                                    "search": "Buscar:",
-                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                    "zeroRecords": "No se encontraron resultados",
-                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                                    "paginate": {
-                                                        "first": "<<",
-                                                        "last": ">>",
-                                                        "next": ">",
-                                                        "previous": "<"
-                                                    }
-                                                }
-                                            });
-                                        });
-            </script>
-            <script src="../js/main.js"></script>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+        <script>
+                                                        $(document).ready(function () {
+                                                            $('#tablaDep').DataTable({
+                                                                "searching": true, // Habilitar o deshabilitar el buscador
+                                                                "paging": true, // Habilitar o deshabilitar la paginación
+                                                                "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                                                "pageLength": 10, // Número predeterminado de registros por página
+                                                                "language": {// Personalizar el texto mostrado
+                                                                    "search": "Buscar:",
+                                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                                    "zeroRecords": "No se encontraron resultados",
+                                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                                    "paginate": {
+                                                                        "first": "<<",
+                                                                        "last": ">>",
+                                                                        "next": ">",
+                                                                        "previous": "<"
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
+        </script>
+        <script src="../js/main.js"></script>
     </body>
 </html>

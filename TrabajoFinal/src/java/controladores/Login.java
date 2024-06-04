@@ -45,9 +45,6 @@ public class Login extends HttpServlet {
             Empleado e;
             try {
                 String passCod = modeloEmpleado.codificar(pass);
-                System.out.println("-----------------------------------------------------");
-                System.out.println(passCod);
-                System.out.println("-----------------------------------------------------");
                 e = modeloLogin.validarEmpleado(email, passCod);
                 if (e != null) {
                     HttpSession sesion = request.getSession();
