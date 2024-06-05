@@ -61,7 +61,27 @@ public class modeloEmpleado {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Empleado e = ejc.findEmpleado(id);
+        String passCod;
+        try {
+            passCod = codificar(pass);
+            e.setPass(passCod);
+            ejc.edit(e);
+            emf.close();
+        } catch (Exception ex) {
+            Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void editarEmpleado(Long id, String nombre, String email, String pass, String cargo, Long dep, String tipoUsu) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        Empleado e = ejc.findEmpleado(id);
+        e.setNombre(nombre);
+        e.setEmail(email);
         e.setPass(pass);
+        e.setCargo(cargo);
+        e.setDepartamento(dep);
+        e.setTipoUsuario(tipoUsu);
         try {
             ejc.edit(e);
             emf.close();
@@ -101,5 +121,13 @@ public class modeloEmpleado {
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static Empleado verEmpleado(Long id_empleado) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+        Empleado e = ejc.findEmpleado(id_empleado);
+        emf.close();
+        return e;
     }
 }

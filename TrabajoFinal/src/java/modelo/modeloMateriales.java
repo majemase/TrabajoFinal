@@ -49,4 +49,17 @@ public class modeloMateriales {
             Logger.getLogger(modeloMateriales.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static void confirmaMat(Long id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        MaterialesJpaController mjc = new MaterialesJpaController(emf);
+        Materiales m = mjc.findMateriales(id);
+        m.setAprobado(true);
+        try {
+            mjc.edit(m);
+            emf.close();
+        } catch (Exception ex) {
+            Logger.getLogger(modeloMateriales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

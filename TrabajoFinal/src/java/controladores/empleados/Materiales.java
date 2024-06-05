@@ -4,6 +4,7 @@
  */
 package controladores.empleados;
 
+import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.TipoUsuario;
+import modelo.modeloEmpleado;
 import modelo.modeloMateriales;
 
 /**
@@ -40,7 +42,7 @@ public class Materiales extends HttpServlet {
             String nombre = request.getParameter("nombre");
             double precio = Double.parseDouble(request.getParameter("precio"));
             int stock = Integer.parseInt(request.getParameter("stock"));
-            if (TipoUsuario.ADMINISTRADOR.equals(request.getSession().getAttribute("tipoUsuario"))) {
+            if (TipoUsuario.ADMINISTRADOR.equals(((Empleado) request.getSession().getAttribute("usuario")).getTipoUsuario())) {
                 modeloMateriales.añadirMateriales(nombre, precio, stock, true);
             } else {
                 modeloMateriales.añadirMateriales(nombre, precio, stock, false);
@@ -50,6 +52,9 @@ public class Materiales extends HttpServlet {
         }
         if (request.getParameter("eliminar") != null) {
             modeloMateriales.delMat(parseLong(request.getParameter("id")));
+        }
+        if (request.getParameter("confirma") != null) {
+            modeloMateriales.confirmaMat(parseLong(request.getParameter("id")));
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

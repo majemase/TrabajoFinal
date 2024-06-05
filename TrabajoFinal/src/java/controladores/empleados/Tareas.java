@@ -4,6 +4,7 @@
  */
 package controladores.empleados;
 
+import entidades.Departamento;
 import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Cargo;
 import modelo.modeloEmpleado;
 import modelo.modeloTareas;
 
@@ -38,6 +40,17 @@ public class Tareas extends HttpServlet {
             throws ServletException, IOException {
         String vista = "/empleado/tareas.jsp";
         request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
+        Empleado usuario = (Empleado) request.getSession().getAttribute("usuario");
+
+        if (usuario.getCargo().equals(Cargo.JEFEDEPARTAMENTO)) {
+            Departamento departamento = usuario.getDepartamento();
+            request.setAttribute("tareas", modeloTareas.listarTareasDep(departamento.getId_departamento()));
+        } else if (usuario.getCargo().equals(Cargo.JEFE)) {
+            request.setAttribute("tareas", modeloTareas.listarTareas());
+        } else {
+            Long idEmpleado = usuario.getId_empleado();
+            request.setAttribute("tareas", modeloTareas.listarTareasEmp(idEmpleado));
+        }
         if (request.getParameter("añadir") != null) {
             String desc = request.getParameter("desc");
             String fecha = request.getParameter("fecha");

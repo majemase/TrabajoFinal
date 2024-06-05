@@ -2,31 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package prueba;
+package controladores.admin;
 
-import dao.EmpleadoJpaController;
 import entidades.Empleado;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Cargo;
-import modelo.TipoUsuario;
 import modelo.modeloEmpleado;
 
 /**
  *
  * @author majemase
  */
-@WebServlet(name = "prueba", urlPatterns = {"/prueba"})
-public class prueba extends HttpServlet {
+@WebServlet(name = "verEmp", urlPatterns = {"/admin/verEmp"})
+public class verEmp extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,24 +33,24 @@ public class prueba extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        final String PU = "TrabajoFinalPU";
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
-
-        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
-        Empleado e = new Empleado();
-        e.setNombre("majemase");
-        String pass;
-        try {
-            pass = modeloEmpleado.codificar("majemaseAdmin");
-            e.setPass(pass);
-            e.setPuntos_productividad(9999);
-            e.setTipoUsuario(TipoUsuario.ADMINISTRADOR);
-            e.setCargo(Cargo.JEFE);
-            e.setEmail("majemase12@gmail.com");
-            ejc.create(e);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+        Long empleadoId = Long.parseLong(request.getParameter("id"));
+        Empleado e = modeloEmpleado.verEmpleado(empleadoId);
+        String jsonEmpleado = "{";
+        jsonEmpleado += "\"id\": \"" + e.getId_empleado() + "\",";
+        jsonEmpleado += "\"nombre\": \"" + e.getNombre() + "\",";
+        jsonEmpleado += "\"email\": \"" + e.getEmail() + "\",";
+        jsonEmpleado += "\"pass\": \"" + e.getPass() + "\",";
+        jsonEmpleado += "\"cargo\": \"" + e.getCargo() + "\",";
+        if (e.getDepartamento() != null) {
+            jsonEmpleado += "\"dep\": \"" + e.getDepartamento().getId_departamento() + "\",";
+        } else {
+            jsonEmpleado += "\"dep\": null,";
         }
+        jsonEmpleado += "\"tipoUsu\": \"" + e.getTipoUsuario() + "\"";
+        jsonEmpleado += "}";
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonEmpleado);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

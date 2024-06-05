@@ -1,12 +1,12 @@
 <header>
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-azul-oscuro">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center text-white" href="http://localhost:8080/TrabajoFinal/empleado/MenuPrincipal">
+            <a class="navbar-brand d-flex align-items-center text-white" href="/TrabajoFinal/empleado/MenuPrincipal">
                 <img src="../assets/imagenes/logo.png" alt="Logo" width="75" class="d-inline-block align-text-top">
                 ProductivityTrack
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="fa-solid fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -30,16 +30,16 @@
                         </c:if>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Cuenta
+                                <i class="fa-solid fa-user"></i> Cuenta
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                            <ul class="dropdown-menu dropdown-menu-end bg-azul-oscuro">
                                 <li>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="dropdown-item text-white bg-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <button type="button" class="dropdown-item text-white " data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <i class="fa-solid fa-gears"></i> Ajustes
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item text-white bg-dark" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+                                <li><a class="dropdown-item text-white bg-azul-oscuro" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -59,37 +59,25 @@
             <form action="/TrabajoFinal/empleado/MenuPrincipal" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="nombreAjustes" class="form-label">Nombre</label>
-                        <input type="text" class="form-control bg-secondary text-white" value="${usuario.nombre}" name="nombreAjustes" id="nombreAjustes">
+                        <label class="form-label">Nombre</label>
+                        <p class="text-white">${usuario.nombre}</p>
                     </div>
                     <div class="mb-3">
-                        <label for="passAjustes" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control bg-secondary text-white" value="${usuario.pass}" name="passAjustes" id="passAjustes">
+                        <label for="passAj" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control bg-secondary text-white" value="${usuario.pass}" name="passAj" id="passAj">
                     </div>
                     <div class="mb-3">
-                        <label for="cargoAjustes" class="form-label">Cargo</label>
-                        <select name="cargoAjustes" id="cargoAjustes" class="form-select bg-secondary text-white" aria-label="Cargo">
-                            <c:forEach var="cargo" items="${cargos}">
-                                <option value="${cargo}" <c:if test="${usuario.cargo eq cargo}">selected</c:if>>${cargo}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="depAjustes" class="form-label">Departamento</label>
-                        <select id="depAjustes" name="depAjustes" class="form-select bg-secondary text-white" aria-label="Departamento">
-                            <c:forEach var="dep" items="${departamentos}">
-                                <option value="${dep.id_departamento}" <c:if test="${usuario.departamento eq departamento}">selected</c:if>>${dep.nombre}</option>
-                            </c:forEach>
-                        </select>
+                        <label class="form-label">Cargo </label>
+                        <p class="text-white">${usuario.cargo}</p>
                     </div>
                 </div>
                 <div class="text-warning">
                     ${error}
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="idEmpleado" id="idEmpleado" value="${empleado}">
+                    <input type="hidden" name="idEmpleado" id="idEmpleado" value="${usuario.id_empleado}">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" name="editarAj" class="btn btn-primary">Aplicar cambios</button>
+                    <button type="submit" name="editarAj" class="btn btn-primary">Aplicar cambios</button>
                 </div>
             </form>
         </div>

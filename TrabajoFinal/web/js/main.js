@@ -41,6 +41,26 @@ function verDep(departmentId) {
     });
 }
 
+function verEmp(empleadoId) {
+    $.ajax({
+        type: 'POST',
+        url: '/TrabajoFinal/admin/verEmp',
+        data: {id: empleadoId},
+        success: function (response) {
+            $('#idEmpleadoEdit').val(empleadoId)
+            $('#nombreEdit').val(response.nombre);
+            $('#emailEdit').val(response.email);
+            $('#passEdit').val(response.pass);
+            $('#' + response.cargo + 'Edit').prop('selected', true);
+            $('#dep-' + response.dep).prop('selected', true);
+            $('#' + response.tipoUsu + 'Edit').prop('selected', true);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error en la solicitud: ' + error);
+        }
+    });
+}
+
 function confirmaDel(departmentId) {
     Swal.fire({
         title: "¿Seguro?",
@@ -126,6 +146,43 @@ function confirmaDelMat(materialId) {
                         text: "No se ha podido eliminar el departamento"
                     });
                 }
+            });
+        }
+    });
+}
+
+function confirMat(materialId) {
+    $.ajax({
+        type: 'POST',
+        url: '/TrabajoFinal/empleado/Materiales',
+        data: {id: materialId, confirma: "confirma"},
+        success: function (response) {
+            location.reload();
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se ha podido eliminar el departamento"
+            });
+        }
+    });
+}
+
+function procesoTar(tareaId, estado, opciones) {
+    var fechaPulsa = new Date().toISOString();
+    $.ajax({
+        type: 'POST',
+        url: '/TrabajoFinal/empleado/MenuPrincipal',
+        data: {id: tareaId, estado: estado, fecha: fechaPulsa, princ_fin: opciones},
+        success: function (response) {
+            location.reload();
+        },
+        error: function (xhr, status, error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se ha podido eliminar el departamento"
             });
         }
     });

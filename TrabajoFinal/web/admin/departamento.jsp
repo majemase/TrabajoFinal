@@ -12,8 +12,9 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../assets/css/main.css"/>
     </head>
-    <body class="bg-secondary">
+    <body class="bg-light">
         <%@include file="../header.jsp" %>
         <section class="container py-3">
             <div class="row justify-content-center">
@@ -48,17 +49,17 @@
                 </div>
             </div>
             <article class="mt-4">
-                <div class="card bg-dark text-white shadow-sm">
+                <div class="card bg-azul-oscuro text-white shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaDep" class="table table-striped table-bordered align-items-center mb-0">
-                                <thead class="table-dark">
+                                <thead>
                                     <tr>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Jefe departamento</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Empleados</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Jefe departamento</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Empleados</th>
                                             <c:if test="${usuario.tipoUsuario == 'ADMINISTRADOR'}">
-                                            <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                             </c:if>
                                     </tr>
                                 </thead>
@@ -94,13 +95,13 @@
                                         </tr>
                                     </c:forEach>
                                 </tbody>
-                                <tfoot class="table-dark">
+                                <tfoot>
                                     <tr>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Jefe departamento</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Empleados</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Jefe departamento</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Empleados</th>
                                             <c:if test="${usuario.tipoUsuario == 'ADMINISTRADOR'}">
-                                            <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                             </c:if>
                                     </tr>
                                 </tfoot>

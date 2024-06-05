@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.modeloDepartamento;
 import modelo.modeloEmpleado;
+import modelo.modeloTareas;
 
 /**
  *
@@ -41,12 +42,15 @@ public class MenuPrincipal extends HttpServlet {
         }
         if (request.getParameter("editarAj") != null) {
             Long id = parseLong(request.getParameter("idEmpleado"));
-            String pass = request.getParameter("pass");
+            String pass = request.getParameter("passAj");
             if (pass.equals(pass)) {
                 modeloEmpleado.editarEmpleado(id, pass);
             } else {
                 request.setAttribute("error", "Las contraseñas no coinciden");
             }
+        }
+        if (request.getParameter("estado") != null) {
+            modeloTareas.editarEstado(parseLong(request.getParameter("id")), request.getParameter("estado"), request.getParameter("fecha"), request.getParameter("princ_fin"));
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

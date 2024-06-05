@@ -7,8 +7,6 @@ package controladores.admin;
 import entidades.Departamento;
 import entidades.Empleado;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.Long.parseLong;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,11 +37,27 @@ public class verDep extends HttpServlet {
         Long departamentoId = Long.parseLong(request.getParameter("id"));
         Departamento departamento = modeloDepartamento.verDepartamento(departamentoId);
 
-        // Construir el JSON manualmente
+// Construir el JSON manualmente
         String jsonDepartamento = "{";
         jsonDepartamento += "\"id\": \"" + departamento.getId_departamento() + "\",";
         jsonDepartamento += "\"nombre\": \"" + departamento.getNombre() + "\",";
-        jsonDepartamento += "\"jefeDepartamento\": null,"; // Inicialmente establecemos al jefe de departamento como null
+        jsonDepartamento += "\"jefeDepartamento\": ";
+
+// Verificar si el jefe del departamento está presente
+        Empleado jefeDepartamento = null;
+        for (Empleado empleado : departamento.getEmpleados()) {
+            if (empleado.getCargo() == Cargo.JEFEDEPARTAMENTO) {
+                jefeDepartamento = empleado;
+                break;
+            }
+        }
+
+// Agregar el jefe del departamento al JSON si está presente
+        if (jefeDepartamento != null) {
+            jsonDepartamento += "{\"id\": \"" + jefeDepartamento.getId_empleado() + "\", \"nombre\": \"" + jefeDepartamento.getNombre() + "\"},";
+        } else {
+            jsonDepartamento += "null,";
+        }
 
 // Agregar la lista de empleados
         jsonDepartamento += "\"empleados\": [";
@@ -63,17 +77,7 @@ public class verDep extends HttpServlet {
 
         jsonDepartamento += "}";
 
-// Buscar al jefe de departamento
-        for (Empleado empleado : empleados) {
-            if (empleado.getCargo() == Cargo.JEFEDEPARTAMENTO) {
-                // Si encontramos al jefe de departamento, lo agregamos al JSON
-                jsonDepartamento = jsonDepartamento.replace("\"jefeDepartamento\": null",
-                        "\"jefeDepartamento\": {\"id\": \"" + empleado.getId_empleado() + "\", \"nombre\": \"" + empleado.getNombre() + "\"}");
-                break;
-            }
-        }
-
-        // Enviar el JSON como respuesta al cliente
+// Enviar el JSON como respuesta al cliente
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonDepartamento);

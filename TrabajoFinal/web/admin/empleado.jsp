@@ -17,10 +17,11 @@
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../assets/css/main.css"/>
     </head>
-    <body class="bg-secondary">
+    <body class="bg-light">
         <%@include file="../header.jsp" %>
-        <section class="container py-3">
+        <section class="container p-3">
             <div class="row justify-content-center">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmpleado">
@@ -84,18 +85,18 @@
                 </div>
             </div>
             <article class="mt-4">
-                <div class="card bg-dark text-white shadow-sm">
+                <div class="card bg-azul-oscuro text-white shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaEmpleados" class="table table-striped table-bordered align-items-center mb-0">
-                                <thead class="table-dark">
+                                <thead class="bg-azul-oscuro">
                                     <tr>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Email</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Cargo</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Departamento</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">TipoUsuario</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Email</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Cargo</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Departamento</th>
+                                        <th class="text-center text-uppercase font-weight-bold">TipoUsuario</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -127,14 +128,14 @@
                                         </tr>
                                     </c:forEach>
                                 </tbody>
-                                <tfoot class="table-dark">
+                                <tfoot class="bg-azul-oscuro">
                                     <tr>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Email</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Cargo</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Departamento</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">TipoUsuario</th>
-                                        <th class="text-center text-uppercase text-light font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Email</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Cargo</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Departamento</th>
+                                        <th class="text-center text-uppercase font-weight-bold">TipoUsuario</th>
+                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -148,7 +149,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editarModalLabel">Editar Empleado</h1>
+                        <h1 class="modal-title fs-5 text-dark" id="editarModalLabel">Editar Empleado</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -169,7 +170,7 @@
                                 <label for="cargoEdit" class="form-label">Cargo</label>
                                 <select name="cargo" id="cargoEdit" class="form-select" aria-label="Cargo">
                                     <c:forEach var="cargo" items="${cargos}">
-                                        <option value="${cargo}">${cargo}</option>
+                                        <option value="${cargo}" id="${cargo}Edit">${cargo}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -177,7 +178,7 @@
                                 <label for="depEdit" class="form-label">Departamento</label>
                                 <select id="depEdit" name="dep" class="form-select" aria-label="Departamento">
                                     <c:forEach var="dep" items="${departamentos}">
-                                        <option value="${dep.id_departamento}">${dep.nombre}</option>
+                                        <option value="${dep.id_departamento}" id="dep-${dep.id_departamento}">${dep.nombre}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -185,12 +186,12 @@
                                 <label for="tipoUsuEdit" class="form-label">Tipo usuario</label>
                                 <select id="tipoUsuEdit" name="tipoUsu" class="form-select" aria-label="TipoUsu">
                                     <c:forEach var="tipoUsu" items="${tipoUsus}">
-                                        <option value="${tipoUsu}">${tipoUsu}</option>
+                                        <option value="${tipoUsu}" id="${tipoUsu}Edit">${tipoUsu}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-end gap-3">
-                                <input type="hidden" id="idEmpleado" name="idEmpleado" value="" />
+                                <input type="hidden" id="idEmpleadoEdit" name="idEmpleado" value="" />
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary" name="editar" value="true">Guardar cambios</button>
                             </div>
@@ -204,28 +205,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
         <script>
-                                                $(document).ready(function () {
-                                                    $('#tablaEmpleados').DataTable({
-                                                        "searching": true, // Habilitar o deshabilitar el buscador
-                                                        "paging": true, // Habilitar o deshabilitar la paginación
-                                                        "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                                                        "pageLength": 10, // Número predeterminado de registros por página
-                                                        "language": {// Personalizar el texto mostrado
-                                                            "search": "Buscar:",
-                                                            "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                            "zeroRecords": "No se encontraron resultados",
-                                                            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                            "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                                            "paginate": {
-                                                                "first": "<<",
-                                                                "last": ">>",
-                                                                "next": ">",
-                                                                "previous": "<"
+                                                    $(document).ready(function () {
+                                                        $('#tablaEmpleados').DataTable({
+                                                            "searching": true, // Habilitar o deshabilitar el buscador
+                                                            "paging": true, // Habilitar o deshabilitar la paginación
+                                                            "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                                            "pageLength": 10, // Número predeterminado de registros por página
+                                                            "language": {// Personalizar el texto mostrado
+                                                                "search": "Buscar:",
+                                                                "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                                "zeroRecords": "No se encontraron resultados",
+                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                                "paginate": {
+                                                                    "first": "<<",
+                                                                    "last": ">>",
+                                                                    "next": ">",
+                                                                    "previous": "<"
+                                                                }
                                                             }
-                                                        }
+                                                        });
                                                     });
-                                                });
         </script>
         <script src="../js/main.js"></script>
     </body>
