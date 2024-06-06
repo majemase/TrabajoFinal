@@ -70,7 +70,9 @@ public class Empleados extends HttpServlet {
             modeloEmpleado.delEmp(parseLong(request.getParameter("id")));
         }
         if (request.getParameter("editar") != null) {
-            modeloEmpleado.editarEmpleado(parseLong(request.getParameter("id")), request.getParameter("nombre"), request.getParameter("email"), request.getParameter("pass"), request.getParameter("cargo"), request.getParameter("dep"), request.getParameter("tipoUsu"));
+            modeloEmpleado.editarEmpleado(parseLong(request.getParameter("idEmpleado")), request.getParameter("nombre"), request.getParameter("email"), request.getParameter("pass"), request.getParameter("cargo"), parseLong(request.getParameter("dep")), request.getParameter("tipoUsu"));
+            response.sendRedirect(request.getContextPath() + "/admin/Empleados");
+            return;
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

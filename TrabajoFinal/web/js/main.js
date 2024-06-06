@@ -28,6 +28,9 @@ function verDep(departmentId) {
         url: '/TrabajoFinal/admin/verDep',
         data: {id: departmentId},
         success: function (response) {
+            $("#nombreEdit").val('');
+            $("#jefeDep").val('');
+            $("#empleadosDep").val([]);
             $("#nombreEdit").val(response.nombre);
             $("#jefeDep-" + response.jefeDepartamento.id).prop('selected', true);
             response.empleados.forEach(function (empleado) {
@@ -63,8 +66,8 @@ function verEmp(empleadoId) {
 
 function confirmaDel(departmentId) {
     Swal.fire({
-        title: "¿Seguro?",
-        text: "¿Desea eliminar el departamento?",
+        title: "¿Desea eliminar el departamento?",
+        text: "Se elimiaran tambien los empleados asocioados a ese departamento, asegurese de que el departamento este vacio.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -94,7 +97,7 @@ function confirmaDel(departmentId) {
 function confirmaDelEmp(empleadoId) {
     Swal.fire({
         title: "¿Seguro?",
-        text: "¿Desea eliminar el departamento?",
+        text: "¿Desea eliminar el empleado?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -113,7 +116,7 @@ function confirmaDelEmp(empleadoId) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "No se ha podido eliminar el departamento"
+                        text: "No se ha podido eliminar el empleado"
                     });
                 }
             });
@@ -124,7 +127,7 @@ function confirmaDelEmp(empleadoId) {
 function confirmaDelMat(materialId) {
     Swal.fire({
         title: "¿Seguro?",
-        text: "¿Desea eliminar el departamento?",
+        text: "¿Desea eliminar el material?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -143,7 +146,37 @@ function confirmaDelMat(materialId) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "No se ha podido eliminar el departamento"
+                        text: "No se ha podido eliminar el material"
+                    });
+                }
+            });
+        }
+    });
+}
+
+function confirmaDelTarea(tareaId) {
+    Swal.fire({
+        title: "¿Seguro?",
+        text: "¿Desea eliminar la tarea?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: '/TrabajoFinal/empleado/Tareas',
+                data: {id: tareaId, eliminar: "eliminar"},
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "No se ha podido eliminar la tarea"
                     });
                 }
             });
@@ -163,7 +196,7 @@ function confirMat(materialId) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se ha podido eliminar el departamento"
+                text: "No se ha podido confirmar el material"
             });
         }
     });
@@ -182,7 +215,7 @@ function procesoTar(tareaId, estado, opciones) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "No se ha podido eliminar el departamento"
+                text: "No se ha podido cambiar el estado de la tarea"
             });
         }
     });

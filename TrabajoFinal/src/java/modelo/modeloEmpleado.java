@@ -79,9 +79,31 @@ public class modeloEmpleado {
         e.setNombre(nombre);
         e.setEmail(email);
         e.setPass(pass);
-        e.setCargo(cargo);
-        e.setDepartamento(dep);
-        e.setTipoUsuario(tipoUsu);
+        Cargo carg = Cargo.EMPLEADO;
+        switch (cargo) {
+            case "JEFE":
+                carg = Cargo.JEFE;
+                break;
+            case "JEFEDEPARTAMENTO":
+                carg = Cargo.JEFEDEPARTAMENTO;
+                break;
+            case "EMPLEADO":
+                carg = Cargo.EMPLEADO;
+                break;
+        }
+        Departamento departamento = modeloDepartamento.buscarDepartamentoId(dep);
+        e.setCargo(carg);
+        e.setDepartamento(departamento);
+        TipoUsuario tipUsu = TipoUsuario.EMPLEADO;
+        switch (tipoUsu) {
+            case "ADMINISTRADOR":
+                tipUsu = TipoUsuario.ADMINISTRADOR;
+                break;
+            case "EMPLEADO":
+                tipUsu = TipoUsuario.EMPLEADO;
+                break;
+        }
+        e.setTipoUsuario(tipUsu);
         try {
             ejc.edit(e);
             emf.close();

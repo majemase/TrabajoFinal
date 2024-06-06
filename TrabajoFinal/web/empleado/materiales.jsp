@@ -19,8 +19,8 @@
         <section class="container py-3">
             <div class="row justify-content-center">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
-                        Añadir materiales
+                    <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addDep">
+                        <i class="fa-solid fa-plus"></i> Añadir material
                     </button>
                 </div>
             </div>
@@ -57,17 +57,17 @@
                 </div>
             </div>
             <article class="mt-4">
-                <div class="card bg-azul-oscuro text-white shadow-sm">
+                <div class="card bg-azul text-azul shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaMateriales" class="table table-striped table-bordered align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-center text-uppercase  font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Precio</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Stock</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Precio</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Stock</th>
                                             <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR'}">
-                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                            <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
                                             </c:if>
                                     </tr>
                                 </thead>
@@ -108,11 +108,11 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Precio</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Stock</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Precio</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Stock</th>
                                             <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR'}">
-                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                            <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
                                             </c:if>
                                     </tr>
                                 </tfoot>

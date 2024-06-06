@@ -6,6 +6,7 @@ package modelo;
 
 import dao.DepartamentoJpaController;
 import dao.TareasJpaController;
+import dao.exceptions.NonexistentEntityException;
 import entidades.Departamento;
 import entidades.Empleado;
 import entidades.Tareas;
@@ -108,4 +109,14 @@ public class modeloTareas {
         return tareasDepartamento;
     }
 
+    public static void eliminarTarea(Long id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        TareasJpaController tjc = new TareasJpaController(emf);
+        try {
+            tjc.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(modeloTareas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        emf.close();
+    }
 }

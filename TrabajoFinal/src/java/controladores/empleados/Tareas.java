@@ -8,6 +8,7 @@ import entidades.Departamento;
 import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Long.parseLong;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Cargo;
+import modelo.modeloEmail;
 import modelo.modeloEmpleado;
 import modelo.modeloTareas;
 
@@ -60,6 +62,16 @@ public class Tareas extends HttpServlet {
             } catch (ParseException ex) {
                 Logger.getLogger(Tareas.class.getName()).log(Level.SEVERE, null, ex);
             }
+            response.sendRedirect(request.getContextPath() + "/empleado/Tareas");
+            return;
+        }
+        if (request.getParameter("eliminar") != null) {
+            modeloTareas.eliminarTarea(parseLong(request.getParameter("id")));
+        }
+        if (request.getParameter("email") != null) {
+            modeloEmail.enviaEmail(modeloTareas.listarTareas());
+            response.sendRedirect(request.getContextPath() + "/empleado/Tareas");
+            return;
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

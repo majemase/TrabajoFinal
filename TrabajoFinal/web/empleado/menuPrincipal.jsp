@@ -34,19 +34,19 @@
                 </div>
             </div>-->
             <article class="mt-4">
-                <div class="card bg-azul-oscuro text-white shadow-sm">
+                <div class="card bg-azul text-azul shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaTareas" class="table table-striped table-bordered align-items-center mb-0">
                                 <thead>
                                     <tr class="text-azul">
-                                        <th class="text-center text-uppercase font-weight-bold">Descripción</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha Inicio</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha Fin</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Empleados</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Estado</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Descripción</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha Inicio</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha Fin</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Empleados</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Estado</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>

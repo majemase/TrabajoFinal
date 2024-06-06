@@ -17,17 +17,24 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="../assets/css/main.css"/>
     </head>
     <body class="bg-light">
         <%@include file="../header.jsp" %>
         <section class="container p-3">
             <div class="row justify-content-center">
-                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <div class="col-md-4 d-flex justify-content-center align-items-center gap-4">
                     <!-- Botón para activar modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDep">
-                        Añadir tarea
+                    <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addDep">
+                        <i class="fa-solid fa-plus"></i> Añadir tarea
                     </button>
+                    <!-- Botón para mandar emails -->
+                    <form action="../empleado/Tareas" method="POST">
+                        <button type="submit" name="email" class="btn btn-primary bg-azul-oscuro">
+                            <i class="fa-solid fa-paper-plane"></i> Mandar emails
+                        </button>
+                    </form>
                 </div>
             </div>
             <!-- Modal -->
@@ -67,7 +74,7 @@
                 </div>
             </div>
             <article class="mt-4">
-                <div class="card bg-azul-oscuro text-white shadow-sm">
+                <div class="card bg-azul text-azul shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaTareas" class="table table-striped table-bordered align-items-center mb-0">
@@ -79,9 +86,7 @@
                                         <th class="text-center text-uppercase font-weight-bold">Fecha Fin</th>
                                         <th class="text-center text-uppercase font-weight-bold">Empleados</th>
                                         <th class="text-center text-uppercase font-weight-bold">Estado</th>
-                                            <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR' && (usuario.cargo eq 'JEFEDEPARTAMENTO' || usuario.cargo eq 'JEFE')}">
-                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
-                                            </c:if>
+                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -124,13 +129,23 @@
                                                     <i class="fa-solid fa-check text-success"></i>
                                                 </c:if>
                                             </td>
-                                            <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR' and (usuario.cargo eq 'JEFEDEPARTAMENTO' or usuario.cargo eq 'JEFE')}">
-                                                <td class="align-middle text-center">
+                                            <td class="align-middle text-center">
+                                                <c:if test="${tarea.estado eq 'PROCESO'}">
+                                                    <button type="button" onclick="procesoTar(${tarea.id_tarea}, 'realizado', 'fin')" class="btn btn-success btn-sm">
+                                                        <i class="fa-solid fa-check"></i>
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${tarea.estado eq 'NO_REALIZADO'}">
+                                                    <button type="button" onclick="procesoTar(${tarea.id_tarea}, 'proceso', 'ini')" class="btn btn-warning btn-sm">
+                                                        <i class="fa-solid fa-play"></i>
+                                                    </button>
+                                                </c:if>
+                                                <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR' and (usuario.cargo eq 'JEFEDEPARTAMENTO' or usuario.cargo eq 'JEFE')}">
                                                     <button type="button" onclick="confirmaDelTarea(${tarea.id_tarea})" class="btn btn-danger btn-sm">
                                                         <i class="fa-solid fa-trash"></i>
                                                     </button>
-                                                </td>
-                                            </c:if>
+                                                </c:if>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -142,9 +157,7 @@
                                         <th class="text-center text-uppercase font-weight-bold">Fecha Fin</th>
                                         <th class="text-center text-uppercase font-weight-bold">Empleados</th>
                                         <th class="text-center text-uppercase font-weight-bold">Estado</th>
-                                            <c:if test="${usuario.tipoUsuario eq 'ADMINISTRADOR' && (usuario.cargo eq 'JEFEDEPARTAMENTO' || usuario.cargo eq 'JEFE')}">
-                                            <th class="text-center text-uppercase font-weight-bold">Opciones</th>
-                                            </c:if>
+                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -158,28 +171,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
         <script>
-                            $(document).ready(function () {
-                                $('#tablaTareas').DataTable({
-                                    "searching": true, // Habilitar o deshabilitar el buscador
-                                    "paging": true, // Habilitar o deshabilitar la paginación
-                                    "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                                    "pageLength": 10, // Número predeterminado de registros por página
-                                    "language": {// Personalizar el texto mostrado
-                                        "search": "Buscar:",
-                                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                                        "zeroRecords": "No se encontraron resultados",
-                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                        "paginate": {
-                                            "first": "<<",
-                                            "last": ">>",
-                                            "next": ">",
-                                            "previous": "<"
-                                        }
-                                    }
-                                });
-                            });
+                                                        $(document).ready(function () {
+                                                            $('#tablaTareas').DataTable({
+                                                                "searching": true, // Habilitar o deshabilitar el buscador
+                                                                "paging": true, // Habilitar o deshabilitar la paginación
+                                                                "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                                                "pageLength": 10, // Número predeterminado de registros por página
+                                                                "language": {// Personalizar el texto mostrado
+                                                                    "search": "Buscar:",
+                                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                                                                    "zeroRecords": "No se encontraron resultados",
+                                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                                    "paginate": {
+                                                                        "first": "<<",
+                                                                        "last": ">>",
+                                                                        "next": ">",
+                                                                        "previous": "<"
+                                                                    }
+                                                                }
+                                                            });
+                                                        });
         </script>
+        <script src="../js/main.js"></script>
     </body>
 </html>

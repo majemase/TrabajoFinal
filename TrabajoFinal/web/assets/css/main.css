@@ -7,16 +7,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : majemase
 */
 
-.bg-fondo {
-    background-color: #c8e0ec;
+.bg-azul {
+    background-color: #c8e0ec !important;
 }
 
-.bg-azul-oscuro {
-    background-color: #0766ff;
+.bg-azul-oscuro{
+    background-color: #004588 !important;
 }
 
-.text-azul{
-    color: #004588;
+.text-azul {
+    color: #004588 !important;
 }
 
 #tablaTareas thead, #tablaTareas tfoot {
@@ -28,6 +28,40 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background-color: #004588 !important;
 }
 
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #004588 !important; /* Cambiar el color del texto */
+}
+
+/* Asegúrate de que los botones de paginación también tengan el color correcto */
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    color: #004588 !important; /* Cambiar el color del texto al pasar el mouse o hacer clic */
+}
+
+/* Estilo para el campo de búsqueda */
+.dataTables_wrapper .dataTables_filter input {
+    color: #004588 !important;
+    border: 1px solid #004588 !important;
+}
+
+/* Estilo para el menú de longitud de página */
+.dataTables_wrapper .dataTables_length select {
+    color: #004588 !important;
+    border: 1px solid #004588 !important;
+}
+
+/* Estilo para los mensajes de información */
+.dataTables_wrapper .dataTables_info {
+    color: #004588 !important;
+}
+
+/* Fuente personalizada */
 @font-face {
     font-family: 'Poppins';
     src: url('../fonts/Poppins-Thin.ttf') format('truetype');
@@ -36,5 +70,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 html {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
 }
+
+/* Estilo para las filas de la tabla */
+#tablaTareas tbody tr {
+    color: #004588 !important;
+}
+
+/* Estilo para los encabezados de la tabla */
+#tablaTareas thead th, #tablaTareas tfoot th {
+    color: #004588 !important;
+}
+
+/* Estilo para las opciones del menú desplegable */
+.dropdown-menu .dropdown-item {
+    color: #004588 !important;
+}
+
+/* Estilo para los mensajes "Mostrar registros por página" */
+.dataTables_wrapper .dataTables_length label {
+    color: #004588 !important;
+}
+
+/* Estilo para el texto de la opción de longitud de página */
+.dataTables_wrapper .dataTables_length select {
+    color: #004588 !important;
+}
+
+/* Estilo para el texto del cuadro de búsqueda */
+.dataTables_wrapper .dataTables_filter label {
+    color: #004588 !important;
+}
+
+/* Estilo para los mensajes de paginación */
+.dataTables_wrapper .dataTables_paginate {
+    color: #004588 !important;
+}
+
+/* Cambiar el color de la paginación */
+.pagination .page-item.active .page-link {
+    background-color: #004588;
+    border-color: #004588;
+    color: white;
+}
+
+.pagination .page-link {
+    color: #004588;
+}
+

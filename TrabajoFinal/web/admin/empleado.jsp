@@ -24,8 +24,8 @@
         <section class="container p-3">
             <div class="row justify-content-center">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmpleado">
-                        Añadir empleado
+                    <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addEmpleado">
+                        <i class="fa-solid fa-plus"></i> Añadir empleado
                     </button>
                 </div>
             </div>
@@ -85,18 +85,18 @@
                 </div>
             </div>
             <article class="mt-4">
-                <div class="card bg-azul-oscuro text-white shadow-sm">
+                <div class="card bg-azul text-azul shadow-sm">
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="tablaEmpleados" class="table table-striped table-bordered align-items-center mb-0">
-                                <thead class="bg-azul-oscuro">
+                                <thead class="bg-azul">
                                     <tr>
-                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Email</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Cargo</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Departamento</th>
-                                        <th class="text-center text-uppercase font-weight-bold">TipoUsuario</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Email</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Cargo</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Departamento</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">TipoUsuario</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,14 +128,14 @@
                                         </tr>
                                     </c:forEach>
                                 </tbody>
-                                <tfoot class="bg-azul-oscuro">
+                                <tfoot class="bg-azul">
                                     <tr>
-                                        <th class="text-center text-uppercase font-weight-bold">Nombre</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Email</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Cargo</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Departamento</th>
-                                        <th class="text-center text-uppercase font-weight-bold">TipoUsuario</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Nombre</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Email</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Cargo</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Departamento</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">TipoUsuario</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
                                     </tr>
                                 </tfoot>
                             </table>

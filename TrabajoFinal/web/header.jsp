@@ -1,7 +1,7 @@
 <header>
-    <nav class="navbar navbar-expand-lg bg-azul-oscuro">
+    <nav class="navbar navbar-expand-lg bg-azul">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center text-white" href="/TrabajoFinal/empleado/MenuPrincipal">
+            <a class="navbar-brand d-flex align-items-center text-azul" href="/TrabajoFinal/empleado/MenuPrincipal">
                 <img src="../assets/imagenes/logo.png" alt="Logo" width="75" class="d-inline-block align-text-top">
                 ProductivityTrack
             </a>
@@ -12,34 +12,34 @@
                 <div class="navbar-nav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/TrabajoFinal/empleado/MenuPrincipal">Inicio</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/MenuPrincipal">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/TrabajoFinal/empleado/Tareas">Tareas</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Tareas">Tareas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="/TrabajoFinal/empleado/Materiales">Materiales</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Materiales">Materiales</a>
                         </li>
                         <c:if test="${usuario.tipoUsuario eq TipoUsuario.ADMINISTRADOR}">
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="/TrabajoFinal/admin/Empleados">Empleados</a>
+                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Empleados">Empleados</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="/TrabajoFinal/admin/Departamentos">Departamentos</a>
+                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Departamentos">Departamentos</a>
                             </li>
                         </c:if>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-azul" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa-solid fa-user"></i> Cuenta
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-azul-oscuro">
+                            <ul class="dropdown-menu dropdown-menu-end bg-azul">
                                 <li>
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="dropdown-item text-white " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <button type="button" class="dropdown-item text-azul " data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <i class="fa-solid fa-gears"></i> Ajustes
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item text-white bg-azul-oscuro" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+                                <li><a class="dropdown-item text-azul" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
                             </ul>
                         </li>
                     </ul>
