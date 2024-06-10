@@ -1,3 +1,5 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="internacionalizacion.header" var="variables"/>
 <header>
     <nav class="navbar navbar-expand-lg bg-azul">
         <div class="container-fluid">
@@ -12,20 +14,20 @@
                 <div class="navbar-nav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/MenuPrincipal">Inicio</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/MenuPrincipal"><fmt:message key="Inicio" bundle="${variables}" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Tareas">Tareas</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Tareas"><fmt:message key="Tareas" bundle="${variables}" /></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Materiales">Materiales</a>
+                            <a class="nav-link text-azul" href="/TrabajoFinal/empleado/Materiales"><fmt:message key="Materiales" bundle="${variables}" /></a>
                         </li>
                         <c:if test="${usuario.tipoUsuario eq TipoUsuario.ADMINISTRADOR}">
                             <li class="nav-item">
-                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Empleados">Empleados</a>
+                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Empleados"><fmt:message key="Empleados" bundle="${variables}" /></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Departamentos">Departamentos</a>
+                                <a class="nav-link text-azul" href="/TrabajoFinal/admin/Departamentos"><fmt:message key="Departamentos" bundle="${variables}" /></a>
                             </li>
                         </c:if>
                         <li class="nav-item dropdown">
@@ -36,10 +38,10 @@
                                 <li>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="dropdown-item text-azul " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <i class="fa-solid fa-gears"></i> Ajustes
+                                        <i class="fa-solid fa-gears"></i> <fmt:message key="Ajustes" bundle="${variables}" />
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item text-azul" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+                                <li><a class="dropdown-item text-azul" href="../CerrarSesion"><i class="fa-solid fa-right-from-bracket"></i> <fmt:message key="CerrarSesion" bundle="${variables}" /></a></li>
                             </ul>
                         </li>
                     </ul>

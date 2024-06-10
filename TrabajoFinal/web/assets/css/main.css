@@ -64,7 +64,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 /* Fuente personalizada */
 @font-face {
     font-family: 'Poppins';
-    src: url('../fonts/Poppins-Thin.ttf') format('truetype');
+    src: url('Poppins-Thin.ttf') format('truetype');
     font-weight: 100;
     font-style: normal;
 }

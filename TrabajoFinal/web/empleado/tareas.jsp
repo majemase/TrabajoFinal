@@ -19,6 +19,11 @@
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
         <link rel="stylesheet" href="../assets/css/main.css"/>
     </head>
     <body class="bg-light">
@@ -175,6 +180,22 @@
                         </div>
                     </div>
                 </div>
+                <!--<div class="d-flex justify-content-center align-items-center flex-column mt-3">
+                    <div id="container" style="width: 600px; height: 400px;"></div>
+                    <div id="sliders">
+                        <label for="alpha">Alpha:</label>
+                        <input type="range" id="alpha" min="0" max="45" step="5" value="15">
+                        <span id="alpha-value">15</span>
+                        <br>
+                        <label for="beta">Beta:</label>
+                        <input type="range" id="beta" min="0" max="45" step="5" value="15">
+                        <span id="beta-value">15</span>
+                        <br>
+                        <label for="depth">Depth:</label>
+                        <input type="range" id="depth" min="25" max="100" step="5" value="50">
+                        <span id="depth-value">50</span>
+                    </div>
+                </div>-->
             </article>
         </section>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

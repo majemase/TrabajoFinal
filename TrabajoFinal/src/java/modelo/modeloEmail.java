@@ -6,7 +6,6 @@ package modelo;
 
 import entidades.Empleado;
 import entidades.Tareas;
-import java.util.Date;
 import java.util.List;
 import utilidades.Email;
 import utilidades.Utilidades;

@@ -48,6 +48,7 @@ public class Tareas extends HttpServlet {
             request.setAttribute("tareas", modeloTareas.listarTareasDep(departamento.getId_departamento()));
         } else if (usuario.getCargo().equals(Cargo.JEFE)) {
             request.setAttribute("tareas", modeloTareas.listarTareas());
+            request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
         } else {
             Long idEmpleado = usuario.getId_empleado();
             request.setAttribute("tareas", modeloTareas.listarTareasEmp(idEmpleado));

@@ -10,6 +10,9 @@
 <%@page import="modelo.TipoUsuario"%>
 <%@page import="modelo.Cargo"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<fmt:setBundle basename="internacionalizacion.menuPrincipal" var="menuPrincipal"/>
+<fmt:setBundle basename="internacionalizacion.datatable" var="datatable"/>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,12 +39,12 @@
             </div>-->
             <div class="row justify-content-center">
                 <div class="col-md-5 d-flex justify-content-center align-items-center">
-                    <h1 class="text-azul">Listado de tareas pendientes</h1>
+                    <h1 class="text-azul"><fmt:message key="Titulo" bundle="${menuPrincipal}" /></h1>
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-7 d-flex justify-content-center align-items-center">
-                    <h5 class="text-azul">Buenas ${usuario.nombre}, estan son las tareas que tienes en proceso o pendientes:</h5>
+                    <h5 class="text-azul"><fmt:message key="Saludo" bundle="${menuPrincipal}" /> ${usuario.nombre} <fmt:message key="Subtitulo" bundle="${menuPrincipal}" /></h5>
                 </div>
             </div>
             <article class="mt-4">
@@ -51,13 +54,13 @@
                             <table id="tablaTareas" class="table table-striped table-bordered align-items-center mb-0">
                                 <thead>
                                     <tr class="text-azul">
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Descripción</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha Inicio</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Fecha Fin</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Empleados</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Estado</th>
-                                        <th class="text-center text-uppercase text-azul font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Descripcion" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha_ini" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha_fin" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Empleados" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Estado" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Opciones" bundle="${menuPrincipal}" /></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -116,13 +119,13 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-center text-uppercase font-weight-bold">Descripción</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha Inicio</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Fecha Fin</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Empleados</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Estado</th>
-                                        <th class="text-center text-uppercase font-weight-bold">Opciones</th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Descripcion" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha_ini" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Fecha_fin" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Empleados" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Estado" bundle="${menuPrincipal}" /></th>
+                                        <th class="text-center text-uppercase text-azul font-weight-bold"><fmt:message key="Opciones" bundle="${menuPrincipal}" /></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -143,22 +146,21 @@
                                                                     "lengthMenu": [5, 10, 25, 50],
                                                                     "pageLength": 10,
                                                                     "language": {
-                                                                        "search": "Buscar:",
-                                                                        "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                                        "zeroRecords": "No se encontraron resultados",
-                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                                        "infoEmpty": "No tienes tareas pendientes",
-                                                                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                                                        "search": "<fmt:message key='datatable.search' bundle="${datatable}"/>",
+                                                                        "lengthMenu": "<fmt:message key='datatable.lengthMenu' bundle="${datatable}"/>",
+                                                                        "zeroRecords": "<fmt:message key='datatable.zeroRecords' bundle="${datatable}"/>",
+                                                                        "info": "<fmt:message key='datatable.info' bundle="${datatable}"/>",
+                                                                        "infoEmpty": "<fmt:message key='datatable.infoEmpty' bundle="${datatable}"/>",
+                                                                        "infoFiltered": "<fmt:message key='datatable.infoFiltered' bundle="${datatable}"/>",
                                                                         "paginate": {
-                                                                            "first": "<<",
-                                                                            "last": ">>",
-                                                                            "next": ">",
-                                                                            "previous": "<"
+                                                                            "first": "<fmt:message key='datatable.paginate.first' bundle="${datatable}"/>",
+                                                                            "last": "<fmt:message key='datatable.paginate.last' bundle="${datatable}"/>",
+                                                                            "next": "<fmt:message key='datatable.paginate.next' bundle="${datatable}"/>",
+                                                                            "previous": "<fmt:message key='datatable.paginate.previous' bundle="${datatable}"/>"
                                                                         }
                                                                     }
                                                                 });
                                                             });
-
         </script>
         <script src="../js/main.js"></script>
     </body>
