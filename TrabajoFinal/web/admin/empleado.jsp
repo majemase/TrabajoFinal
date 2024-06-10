@@ -13,6 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>ProductivityTrack - Empleados</title>
+        <link rel="icon" href="../assets/imagenes/logo.png">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -23,10 +24,20 @@
         <%@include file="../header.jsp" %>
         <section class="container p-3">
             <div class="row justify-content-center">
+                <div class="col-md-5 d-flex justify-content-center align-items-center">
+                    <h1 class="text-azul">Listado de empleados</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addEmpleado">
                         <i class="fa-solid fa-plus"></i> Añadir empleado
                     </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <h5 class="text-azul">Empleados de la empresa:</h5>
                 </div>
             </div>
             <!-- Modal Añadir Empleado -->

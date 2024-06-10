@@ -43,7 +43,6 @@ public class Tareas extends HttpServlet {
         String vista = "/empleado/tareas.jsp";
         request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
         Empleado usuario = (Empleado) request.getSession().getAttribute("usuario");
-
         if (usuario.getCargo().equals(Cargo.JEFEDEPARTAMENTO)) {
             Departamento departamento = usuario.getDepartamento();
             request.setAttribute("tareas", modeloTareas.listarTareasDep(departamento.getId_departamento()));

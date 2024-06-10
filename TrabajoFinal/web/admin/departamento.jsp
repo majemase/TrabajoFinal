@@ -7,6 +7,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>ProductivityTrack - Departamentos</title>
+        <link rel="icon" href="../assets/imagenes/logo.png">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,10 +19,20 @@
         <%@include file="../header.jsp" %>
         <section class="container py-3">
             <div class="row justify-content-center">
+                <div class="col-md-5 d-flex justify-content-center align-items-center">
+                    <h1 class="text-azul">Listado de departamentos</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addDep">
                         <i class="fa-solid fa-plus"></i> Añadir departamento
                     </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <h5 class="text-azul">Departamentos de la empresa:</h5>
                 </div>
             </div>
             <!-- Modal Añadir Departamento -->
@@ -126,22 +137,22 @@
                                 <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="jefeDep">Jefe de departamento</label>
                                 <select name="jefeDep" id="jefeDep" class="form-select" aria-label="Cargo">
-                                    <c:forEach var="empleado" items="${empleados}">
-                                        <option value="${empleado.id_empleado}" id="jefeDep-${empleado.id_empleado}">${empleado.nombre}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="empleadosDep" class="form-label">Empleados del departamento</label>
-                                <select name="empleadosDep" id="empleadosDep" class="form-select" multiple aria-label="Multiple select example">
-                                    <c:forEach var="empleado" items="${empleados}">
-                                        <option value="${empleado.id_empleado}" id="empleadoDep-${empleado.id_empleado}">${empleado.nombre}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                            <c:forEach var="empleado" items="${empleados}">
+                                <option value="${empleado.id_empleado}" id="jefeDep-${empleado.id_empleado}">${empleado.nombre}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="empleadosDep" class="form-label">Empleados del departamento</label>
+                        <select name="empleadosDep" id="empleadosDep" class="form-select" multiple aria-label="Multiple select example">
+                            <c:forEach var="empleado" items="${empleados}">
+                                <option value="${empleado.id_empleado}" id="empleadoDep-${empleado.id_empleado}">${empleado.nombre}</option>
+                            </c:forEach>
+                        </select>
+                    </div> -->
                             <input type="hidden" name="idDep" id="idDep" value=""/>
                             <div class="d-flex justify-content-end gap-3">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

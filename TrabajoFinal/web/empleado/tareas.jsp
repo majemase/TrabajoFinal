@@ -14,6 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>ProductivityTrack - Tareas</title>
+        <link rel="icon" href="../assets/imagenes/logo.png">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
@@ -24,6 +25,11 @@
         <%@include file="../header.jsp" %>
         <section class="container p-3">
             <div class="row justify-content-center">
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <h1 class="text-azul">Listado de tareas</h1>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-3">
                 <div class="col-md-4 d-flex justify-content-center align-items-center gap-4">
                     <!-- Botón para activar modal -->
                     <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addDep">
@@ -35,6 +41,11 @@
                             <i class="fa-solid fa-paper-plane"></i> Mandar emails
                         </button>
                     </form>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-7 d-flex justify-content-center align-items-center">
+                    <h5 class="text-azul">Comprueba las tareas que tienes realizadas, en proceso o no realizadas:</h5>
                 </div>
             </div>
             <!-- Modal -->

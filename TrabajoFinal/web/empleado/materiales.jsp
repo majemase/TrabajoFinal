@@ -7,6 +7,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>ProductivityTrack - Materiales</title>
+        <link rel="icon" href="../assets/imagenes/logo.png">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -19,9 +20,20 @@
         <section class="container py-3">
             <div class="row justify-content-center">
                 <div class="col-md-4 d-flex justify-content-center align-items-center">
+                    <h1 class="text-azul">Listado de materiales</h1>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <button type="button" class="btn btn-primary bg-azul-oscuro" data-bs-toggle="modal" data-bs-target="#addDep">
                         <i class="fa-solid fa-plus"></i> Añadir material
                     </button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-5 d-flex justify-content-center align-items-center">
+                    <h5 class="text-azul">Manten y comprueba el inventario de tu empresa:</h5>
                 </div>
             </div>
             <!-- Modal Añadir Materiales -->
@@ -97,6 +109,9 @@
                                                                 <i class="fa-solid fa-check"></i>
                                                             </button>
                                                         </c:if>
+                                                        <button type="button" onclick="verMat(${material.id_material})" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editarMat">
+                                                            <i class="fa-solid fa-pen-to-square"></i>
+                                                        </button>
                                                         <button type="button" onclick="confirmaDelMat(${material.id_material})" class="btn btn-danger btn-sm">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </button>
@@ -122,6 +137,38 @@
                 </div>
             </article>
         </section>
+        <!-- Modal Editar Material -->
+        <div class="modal fade" id="editarMat" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editarModalLabel">Editar Material</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="Materiales" method="POST">
+                            <div class="mb-3">
+                                <label for="nombreEdit" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" id="nombreEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="precioEdit" class="form-label">Precio</label>
+                                <input type="number" step="0.01" class="form-control" name="precio" id="precioEdit">
+                            </div>
+                            <div class="mb-3">
+                                <label for="stockEdit" class="form-label">Stock</label>
+                                <input type="number" class="form-control" name="stock" id="stockEdit">
+                            </div>
+                            <input type="hidden" name="id" id="idMaterialEdit" value=""/>
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" value="editar" name="editar" class="btn btn-primary">Editar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

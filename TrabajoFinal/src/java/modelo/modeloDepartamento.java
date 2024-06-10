@@ -62,26 +62,11 @@ public class modeloDepartamento {
         return d;
     }
 
-    public static void editarDep(String nombre, String[] empleados, String jefeDep, Long id) throws Exception {
+    public static void editarDep(String nombre, Long id) throws Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         DepartamentoJpaController djc = new DepartamentoJpaController(emf);
-        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
         Departamento d = djc.findDepartamento(id);
-        List<Empleado> listEmpleados = new ArrayList<>();
-        Empleado e;
-        for (String empleado : empleados) {
-            e = ejc.findEmpleado(parseLong(empleado));
-            e.setDepartamento(d);
-            e.setCargo(Cargo.EMPLEADO);
-            ejc.edit(e);
-            listEmpleados.add(e);
-        }
-        e = ejc.findEmpleado(parseLong(jefeDep));
-        e.setCargo(Cargo.JEFEDEPARTAMENTO);
-        ejc.edit(e);
-        listEmpleados.add(e);
         d.setNombre(nombre);
-        d.setEmpleados(listEmpleados);
         djc.edit(d);
         emf.close();
     }

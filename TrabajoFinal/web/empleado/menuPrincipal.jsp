@@ -15,6 +15,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title>ProductivityTrack - Menu Principal</title>
+        <link rel="icon" href="../assets/imagenes/logo.png">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/05663c91b1.js" crossorigin="anonymous"></script>
@@ -33,6 +34,16 @@
                     </div>
                 </div>
             </div>-->
+            <div class="row justify-content-center">
+                <div class="col-md-5 d-flex justify-content-center align-items-center">
+                    <h1 class="text-azul">Listado de tareas pendientes</h1>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-7 d-flex justify-content-center align-items-center">
+                    <h5 class="text-azul">Buenas ${usuario.nombre}, estan son las tareas que tienes en proceso o pendientes:</h5>
+                </div>
+            </div>
             <article class="mt-4">
                 <div class="card bg-azul text-azul shadow-sm">
                     <div class="card-body">

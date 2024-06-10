@@ -18,9 +18,9 @@ import javax.persistence.Persistence;
  * @author majemase
  */
 public class modeloMateriales {
-
+    
     final static String PU = "TrabajoFinalPU";
-
+    
     public static void añadirMateriales(String nombre, double precio, int stock, boolean aprobado) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         MaterialesJpaController mjc = new MaterialesJpaController(emf);
@@ -32,13 +32,44 @@ public class modeloMateriales {
         mjc.create(m);
         emf.close();
     }
-
+    
+    public static void editarMat(Long materialId, String nombre, String precioStr, String stockStr) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        MaterialesJpaController mjc = new MaterialesJpaController(emf);
+        Materiales m = mjc.findMateriales(materialId);
+        m.setNombre(nombre);
+        Double precio = Double.parseDouble(precioStr);
+        m.setPrecio(precio);
+        int stock = Integer.parseInt(stockStr);
+        m.setStock(stock);
+        try {
+            mjc.edit(m);
+            emf.close();
+        } catch (Exception ex) {
+            Logger.getLogger(modeloMateriales.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Materiales verMat(Long id_material) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        MaterialesJpaController mjc = new MaterialesJpaController(emf);
+        Materiales m = mjc.findMateriales(id_material);
+        emf.close();
+        return m;
+    }
+    
+    public static Materiales buscarMat(Long id) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        MaterialesJpaController mjc = new MaterialesJpaController(emf);
+        return mjc.findMateriales(id);
+    }
+    
     public static List<Materiales> listarMateriales() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         MaterialesJpaController mjc = new MaterialesJpaController(emf);
         return mjc.findMaterialesEntities();
     }
-
+    
     public static void delMat(Long id_material) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         MaterialesJpaController mjc = new MaterialesJpaController(emf);
@@ -49,7 +80,7 @@ public class modeloMateriales {
             Logger.getLogger(modeloMateriales.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public static void confirmaMat(Long id) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         MaterialesJpaController mjc = new MaterialesJpaController(emf);

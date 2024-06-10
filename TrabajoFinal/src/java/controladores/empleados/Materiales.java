@@ -6,8 +6,6 @@ package controladores.empleados;
 
 import entidades.Empleado;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.TipoUsuario;
-import modelo.modeloEmpleado;
 import modelo.modeloMateriales;
 
 /**
@@ -55,6 +52,11 @@ public class Materiales extends HttpServlet {
         }
         if (request.getParameter("confirma") != null) {
             modeloMateriales.confirmaMat(parseLong(request.getParameter("id")));
+        }
+        if (request.getParameter("editar") != null) {
+            modeloMateriales.editarMat(parseLong(request.getParameter("id")), request.getParameter("nombre"), request.getParameter("precio"), request.getParameter("stock"));
+            response.sendRedirect(request.getContextPath() + "/empleado/Materiales");
+            return;
         }
         getServletContext().getRequestDispatcher(vista).forward(request, response);
     }

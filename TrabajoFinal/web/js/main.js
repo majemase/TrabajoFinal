@@ -220,3 +220,20 @@ function procesoTar(tareaId, estado, opciones) {
         }
     });
 }
+
+function verMat(materialId) {
+    $.ajax({
+        type: 'POST',
+        url: '/TrabajoFinal/empleado/verMat',
+        data: {id: materialId},
+        success: function (response) {
+            $('#idMaterialEdit').val(materialId)
+            $('#nombreEdit').val(response.nombre);
+            $('#precioEdit').val(response.precio);
+            $('#stockEdit').val(response.stock);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error en la solicitud: ' + error);
+        }
+    });
+}

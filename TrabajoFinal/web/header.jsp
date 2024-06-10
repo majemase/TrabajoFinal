@@ -30,7 +30,7 @@
                         </c:if>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-azul" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user"></i> Cuenta
+                                <i class="fa-solid fa-user"></i> ${usuario.nombre}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end bg-azul">
                                 <li>
@@ -51,7 +51,7 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content bg-dark text-white">
+        <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Ajustes de usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -60,15 +60,15 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <p class="text-white">${usuario.nombre}</p>
+                        <p class="">${usuario.nombre}</p>
                     </div>
                     <div class="mb-3">
                         <label for="passAj" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control bg-secondary text-white" value="${usuario.pass}" name="passAj" id="passAj">
+                        <input type="password" class="form-control" value="${usuario.pass}" name="passAj" id="passAj">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cargo </label>
-                        <p class="text-white">${usuario.cargo}</p>
+                        <p class="">${usuario.cargo}</p>
                     </div>
                 </div>
                 <div class="text-warning">
@@ -77,7 +77,7 @@
                 <div class="modal-footer">
                     <input type="hidden" name="idEmpleado" id="idEmpleado" value="${usuario.id_empleado}">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" name="editarAj" class="btn btn-primary">Aplicar cambios</button>
+                    <button type="submit" name="editarAj" class="btn btn-primary bg-azul-oscuro">Aplicar cambios</button>
                 </div>
             </form>
         </div>

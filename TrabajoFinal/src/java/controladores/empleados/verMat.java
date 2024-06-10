@@ -2,28 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controladores.admin;
+package controladores.empleados;
 
-import entidades.Departamento;
+import entidades.Empleado;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Long.parseLong;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.modeloDepartamento;
 import modelo.modeloEmpleado;
+import modelo.modeloMateriales;
 
 /**
  *
  * @author majemase
  */
-@WebServlet(name = "Departamentos", urlPatterns = {"/admin/Departamentos"})
-public class Departamentos extends HttpServlet {
+@WebServlet(name = "verMat", urlPatterns = {"/empleado/verMat"})
+public class verMat extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,33 +33,17 @@ public class Departamentos extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vista = "/admin/departamento.jsp";
-        request.setAttribute("departamentos", modeloDepartamento.listaDepartamento());
-        request.setAttribute("empleados", modeloEmpleado.listaEmpleado());
-        if (request.getParameter("añadir") != null) {
-            if (request.getParameter("nombre") != null) {
-                String nombre = request.getParameter("nombre");
-                if (!nombre.trim().isEmpty()) {
-                    modeloDepartamento.añadirDep(nombre);
-                    response.sendRedirect(request.getContextPath() + "/admin/Departamentos");
-                    return;
-                }
-            }
-        }
-        if (request.getParameter("editar") != null) {
-            String nombre = request.getParameter("nombre");
-            try {
-                modeloDepartamento.editarDep(nombre, parseLong(request.getParameter("idDep")));
-                response.sendRedirect(request.getContextPath() + "/admin/Departamentos");
-                return;
-            } catch (Exception ex) {
-                Logger.getLogger(Departamentos.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (request.getParameter("eliminar") != null) {
-            modeloDepartamento.eliminarDepartamento(parseLong(request.getParameter("id")));
-        }
-        getServletContext().getRequestDispatcher(vista).forward(request, response);
+        Long materialId = Long.parseLong(request.getParameter("id"));
+        entidades.Materiales m = modeloMateriales.verMat(materialId);
+        String jsonMaterial = "{";
+        jsonMaterial += "\"id\": \"" + m.getId_material() + "\",";
+        jsonMaterial += "\"nombre\": \"" + m.getNombre() + "\",";
+        jsonMaterial += "\"precio\": " + m.getPrecio() + ",";
+        jsonMaterial += "\"stock\": " + m.getStock();
+        jsonMaterial += "}";
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonMaterial);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

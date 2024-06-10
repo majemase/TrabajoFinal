@@ -73,41 +73,46 @@ public class modeloEmpleado {
     }
 
     public static void editarEmpleado(Long id, String nombre, String email, String pass, String cargo, Long dep, String tipoUsu) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
-        EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
-        Empleado e = ejc.findEmpleado(id);
-        e.setNombre(nombre);
-        e.setEmail(email);
-        e.setPass(pass);
-        Cargo carg = Cargo.EMPLEADO;
-        switch (cargo) {
-            case "JEFE":
-                carg = Cargo.JEFE;
-                break;
-            case "JEFEDEPARTAMENTO":
-                carg = Cargo.JEFEDEPARTAMENTO;
-                break;
-            case "EMPLEADO":
-                carg = Cargo.EMPLEADO;
-                break;
-        }
-        Departamento departamento = modeloDepartamento.buscarDepartamentoId(dep);
-        e.setCargo(carg);
-        e.setDepartamento(departamento);
-        TipoUsuario tipUsu = TipoUsuario.EMPLEADO;
-        switch (tipoUsu) {
-            case "ADMINISTRADOR":
-                tipUsu = TipoUsuario.ADMINISTRADOR;
-                break;
-            case "EMPLEADO":
-                tipUsu = TipoUsuario.EMPLEADO;
-                break;
-        }
-        e.setTipoUsuario(tipUsu);
         try {
-            ejc.edit(e);
-            emf.close();
-        } catch (Exception ex) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+            EmpleadoJpaController ejc = new EmpleadoJpaController(emf);
+            Empleado e = ejc.findEmpleado(id);
+            e.setNombre(nombre);
+            e.setEmail(email);
+            String passCod = codificar(pass);
+            e.setPass(passCod);
+            Cargo carg = Cargo.EMPLEADO;
+            switch (cargo) {
+                case "JEFE":
+                    carg = Cargo.JEFE;
+                    break;
+                case "JEFEDEPARTAMENTO":
+                    carg = Cargo.JEFEDEPARTAMENTO;
+                    break;
+                case "EMPLEADO":
+                    carg = Cargo.EMPLEADO;
+                    break;
+            }
+            Departamento departamento = modeloDepartamento.buscarDepartamentoId(dep);
+            e.setCargo(carg);
+            e.setDepartamento(departamento);
+            TipoUsuario tipUsu = TipoUsuario.EMPLEADO;
+            switch (tipoUsu) {
+                case "ADMINISTRADOR":
+                    tipUsu = TipoUsuario.ADMINISTRADOR;
+                    break;
+                case "EMPLEADO":
+                    tipUsu = TipoUsuario.EMPLEADO;
+                    break;
+            }
+            e.setTipoUsuario(tipUsu);
+            try {
+                ejc.edit(e);
+                emf.close();
+            } catch (Exception ex) {
+                Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(modeloEmpleado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
