@@ -47,7 +47,7 @@
                             <form action="/TrabajoFinal/admin/Departamentos" method="POST">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre">
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">

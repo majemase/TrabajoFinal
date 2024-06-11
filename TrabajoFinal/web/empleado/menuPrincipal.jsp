@@ -27,16 +27,6 @@
     <body class="bg-light">
         <%@ include file="../header.jsp" %>
         <section class="container py-3">
-            <!--<div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card text-center shadow-sm bg-azul-oscuro">
-                        <div class="card-body text-white">
-                            <h5 class="card-title">Puntos de Productividad</h5>
-                            <h6 class="card-subtitle mb-2 fs-1 text-white">${usuario.puntos_productividad}</h6>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row justify-content-center">
                 <div class="col-md-5 d-flex justify-content-center align-items-center">
                     <h1 class="text-azul"><fmt:message key="Titulo" bundle="${menuPrincipal}" /></h1>

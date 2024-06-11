@@ -48,15 +48,15 @@
                             <form action="../empleado/Materiales" method="POST">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre">
+                                    <input type="text" class="form-control" name="nombre" id="nombre" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="precio" class="form-label">Precio</label>
-                                    <input type="number" step="0.01" class="form-control" name="precio" id="precio">
+                                    <input type="number" step="0.01" class="form-control" name="precio" id="precio" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control" name="stock" id="stock">
+                                    <input type="number" class="form-control" name="stock" id="stock" required>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">

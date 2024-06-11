@@ -65,15 +65,15 @@
                             <form action="../empleado/Tareas" method="POST">
                                 <div class="mb-3">
                                     <label for="desc" class="form-label">Descripción</label>
-                                    <textarea id="desc" class="form-control" name="desc" rows="5" cols="10"></textarea>
+                                    <textarea id="desc" class="form-control" name="desc" rows="5" cols="10" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" name="fecha" id="fecha">
+                                    <input type="date" class="form-control" name="fecha" id="fecha" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="empleado" class="form-label">Empleados</label>
-                                    <select class="form-select" name="listaEmpleado" multiple aria-label="Multiple select example">
+                                    <select class="form-select" name="listaEmpleado" multiple aria-label="Multiple select example" required>
                                         <c:forEach var="empleado" items="${empleados}">
                                             <option value="${empleado.id_empleado}">${empleado.nombre} - ${empleado.departamento.nombre}</option>
                                         </c:forEach>
