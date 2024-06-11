@@ -169,6 +169,20 @@
                 </div>
             </div>
         </div>
+        <br><br><br><br>
+        <footer class="bg-azul text-azul py-3 mt-4 fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0">&copy; 2024 ProductivityTrack. Todos los derechos reservados.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-azul me-3">Política de Privacidad</a>
+                        <a href="#" class="text-azul">Términos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

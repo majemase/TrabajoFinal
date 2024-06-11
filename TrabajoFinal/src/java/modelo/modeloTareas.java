@@ -15,7 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -47,6 +49,27 @@ public class modeloTareas {
         emf.close();
     }
 
+    public static List<Map<String, Object>> grafica() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
+        TareasJpaController tjc = new TareasJpaController(emf);
+        Map<Long, Map<String, Object>> tareasPorEmpleado = new HashMap<>();
+        for (Tareas tarea : tjc.findTareasEntities()) {
+            for (Empleado empleado : tarea.getEmpleados()) {
+                Map<String, Object> datosEmpleado = tareasPorEmpleado.get(empleado.getId_empleado());
+                if (datosEmpleado == null) {
+                    datosEmpleado = new HashMap<>();
+                    datosEmpleado.put("idEmpleado", empleado.getId_empleado());
+                    datosEmpleado.put("nombre", empleado.getNombre());
+                    datosEmpleado.put("numeroDeTareas", 0L);
+                    tareasPorEmpleado.put(empleado.getId_empleado(), datosEmpleado);
+                }
+                datosEmpleado.put("numeroDeTareas", (Long) datosEmpleado.get("numeroDeTareas") + 1);
+            }
+        }
+
+        return new ArrayList<>(tareasPorEmpleado.values());
+    }
+
     public static void editarEstado(Long id, String estado, String fechaStr, String opciones) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         TareasJpaController tjc = new TareasJpaController(emf);
@@ -66,8 +89,10 @@ public class modeloTareas {
             }
             tjc.edit(t);
             emf.close();
+
         } catch (Exception ex) {
-            Logger.getLogger(modeloTareas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(modeloTareas.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -114,8 +139,10 @@ public class modeloTareas {
         TareasJpaController tjc = new TareasJpaController(emf);
         try {
             tjc.destroy(id);
+
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(modeloTareas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(modeloTareas.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         emf.close();
     }

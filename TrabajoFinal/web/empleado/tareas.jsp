@@ -182,49 +182,89 @@
                 </div>
                 <!--<div class="d-flex justify-content-center align-items-center flex-column mt-3">
                     <div id="container" style="width: 600px; height: 400px;"></div>
-                    <div id="sliders">
-                        <label for="alpha">Alpha:</label>
-                        <input type="range" id="alpha" min="0" max="45" step="5" value="15">
-                        <span id="alpha-value">15</span>
-                        <br>
-                        <label for="beta">Beta:</label>
-                        <input type="range" id="beta" min="0" max="45" step="5" value="15">
-                        <span id="beta-value">15</span>
-                        <br>
-                        <label for="depth">Depth:</label>
-                        <input type="range" id="depth" min="25" max="100" step="5" value="50">
-                        <span id="depth-value">50</span>
-                    </div>
                 </div>-->
             </article>
         </section>
+        <br><br><br><br>
+        <footer class="bg-azul text-azul py-3 mt-4 fixed-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0">&copy; 2024 ProductivityTrack. Todos los derechos reservados.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#" class="text-azul me-3">Política de Privacidad</a>
+                        <a href="#" class="text-azul">Términos y Condiciones</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
         <script>
-                                                        $(document).ready(function () {
-                                                            $('#tablaTareas').DataTable({
-                                                                "searching": true, // Habilitar o deshabilitar el buscador
-                                                                "paging": true, // Habilitar o deshabilitar la paginación
-                                                                "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                                                                "pageLength": 10, // Número predeterminado de registros por página
-                                                                "language": {// Personalizar el texto mostrado
-                                                                    "search": "Buscar:",
-                                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                                    "zeroRecords": "No se encontraron resultados",
-                                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                                                    "paginate": {
-                                                                        "first": "<<",
-                                                                        "last": ">>",
-                                                                        "next": ">",
-                                                                        "previous": "<"
-                                                                    }
+                                                        Highcharts.chart('container', {
+                                                            chart: {
+                                                                type: 'pie',
+                                                                options3d: {
+                                                                    enabled: true,
+                                                                    alpha: 45
                                                                 }
-                                                            });
+                                                            },
+                                                            title: {
+                                                                text: 'Tareas realizadas por los empleados',
+                                                                align: 'left'
+                                                            },
+                                                            subtitle: {
+                                                                text: '',
+                                                                align: 'left'
+                                                            },
+                                                            plotOptions: {
+                                                                pie: {
+                                                                    innerSize: 100,
+                                                                    depth: 45
+                                                                }
+                                                            },
+                                                            series: [{
+                                                                    name: 'Tareas',
+                                                                    data: [
+                                                                        ['Norway', 16],
+                                                                        ['Germany', 12],
+                                                                        ['USA', 8],
+                                                                        ['Sweden', 8],
+                                                                        ['Netherlands', 8],
+                                                                        ['ROC', 6],
+                                                                        ['Austria', 7],
+                                                                        ['Canada', 4],
+                                                                        ['Japan', 3]
+                                                                    ]
+                                                                }]
                                                         });
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#tablaTareas').DataTable({
+                    "searching": true, // Habilitar o deshabilitar el buscador
+                    "paging": true, // Habilitar o deshabilitar la paginación
+                    "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                    "pageLength": 10, // Número predeterminado de registros por página
+                    "language": {// Personalizar el texto mostrado
+                        "search": "Buscar:",
+                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                        "zeroRecords": "No se encontraron resultados",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                        "paginate": {
+                            "first": "<<",
+                            "last": ">>",
+                            "next": ">",
+                            "previous": "<"
+                        }
+                    }
+                });
+            });
         </script>
         <script src="../js/main.js"></script>
     </body>
