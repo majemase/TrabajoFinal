@@ -44,10 +44,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/TrabajoFinal/admin/Departamentos" method="POST">
+                            <form action="/TrabajoFinal/admin/Departamentos" method="POST" onsubmit="validarDepartamento(event)">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label text-azul">Nombre</label>
                                     <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
+                                    <div id="nombreError" class="text-danger"></div>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
@@ -132,10 +133,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="Departamentos" method="POST">
+                        <form action="Departamentos" method="POST" onsubmit="validarDepartamentoEdit(event)">
                             <div class="mb-3">
                                 <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
+                                <div id="nombreEditError" class="text-danger"></div>
                             </div>
                             <!-- <div class="mb-3">
                                 <label for="jefeDep">Jefe de departamento</label>
@@ -182,28 +184,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
         <script>
-                                                        $(document).ready(function () {
-                                                            $('#tablaDep').DataTable({
-                                                                "searching": true, // Habilitar o deshabilitar el buscador
-                                                                "paging": true, // Habilitar o deshabilitar la paginación
-                                                                "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                                                                "pageLength": 10, // Número predeterminado de registros por página
-                                                                "language": {// Personalizar el texto mostrado
-                                                                    "search": "Buscar:",
-                                                                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                                    "zeroRecords": "No se encontraron resultados",
-                                                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                                    "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                                    "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                                                    "paginate": {
-                                                                        "first": "<<",
-                                                                        "last": ">>",
-                                                                        "next": ">",
-                                                                        "previous": "<"
-                                                                    }
-                                                                }
-                                                            });
-                                                        });
+                            $(document).ready(function () {
+                                $('#tablaDep').DataTable({
+                                    "searching": true, // Habilitar o deshabilitar el buscador
+                                    "paging": true, // Habilitar o deshabilitar la paginación
+                                    "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                    "pageLength": 10, // Número predeterminado de registros por página
+                                    "language": {// Personalizar el texto mostrado
+                                        "search": "Buscar:",
+                                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                                        "zeroRecords": "No se encontraron resultados",
+                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                        "paginate": {
+                                            "first": "<<",
+                                            "last": ">>",
+                                            "next": ">",
+                                            "previous": "<"
+                                        }
+                                    }
+                                });
+                            });
         </script>
         <script src="../js/main.js"></script>
     </body>

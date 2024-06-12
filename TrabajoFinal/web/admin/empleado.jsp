@@ -49,42 +49,48 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/TrabajoFinal/admin/Empleados" method="POST">
+                            <form action="/TrabajoFinal/admin/Empleados" method="POST" onsubmit="validarEmpleado(event)">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label text-azul">Nombre</label>
                                     <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
+                                    <div id="nombreError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label text-azul">Email</label>
                                     <input type="email" class="form-control text-azul" name="email" id="email" required>
+                                    <div id="emailError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="pass" class="form-label text-azul">Contraseña</label>
                                     <input type="password" class="form-control text-azul" name="pass" id="pass" required>
+                                    <div id="passError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cargo" class="form-label text-azul">Cargo</label>
-                                    <select name="cargo" id="cargo" class="form-select text-azul" aria-label="Cargo">
+                                    <select name="cargo" id="cargo" class="form-select text-azul" aria-label="Cargo" required>
                                         <c:forEach var="cargo" items="${cargos}">
                                             <option value="${cargo}">${cargo}</option>
                                         </c:forEach>
                                     </select>
+                                    <div id="cargoError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="dep" class="form-label text-azul">Departamento</label>
-                                    <select id="dep" name="dep" class="form-select text-azul" aria-label="Departamento">
+                                    <select id="dep" name="dep" class="form-select text-azul" aria-label="Departamento" required>
                                         <c:forEach var="dep" items="${departamentos}">
                                             <option value="${dep.id_departamento}">${dep.nombre}</option>
                                         </c:forEach>
                                     </select>
+                                    <div id="depError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="tipoUsu" class="form-label text-azul">Tipo usuario</label>
-                                    <select id="tipoUsu" name="tipoUsu" class="form-select text-azul" aria-label="TipoUsu">
+                                    <select id="tipoUsu" name="tipoUsu" class="form-select text-azul" aria-label="TipoUsu" required>
                                         <c:forEach var="tipoUsu" items="${tipoUsus}">
                                             <option value="${tipoUsu}">${tipoUsu}</option>
                                         </c:forEach>
                                     </select>
+                                    <div id="tipoUsuError" class="text-danger"></div>
                                 </div>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -164,18 +170,21 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="Empleados" method="POST">
+                        <form action="Empleados" method="POST" onsubmit="validarEmpleadoEdit(event)">
                             <div class="mb-3">
                                 <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
+                                <div id="nombreEditError" class="text-danger"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="emailEdit" class="form-label">Email</label>
                                 <input type="email" class="form-control" name="email" id="emailEdit">
+                                <div id="emailEditError" class="text-danger"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="passEdit" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" name="pass" id="passEdit">
+                                <div id="passEditError" class="text-danger"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="cargoEdit" class="form-label">Cargo</label>
@@ -184,6 +193,7 @@
                                         <option value="${cargo}" id="${cargo}Edit">${cargo}</option>
                                     </c:forEach>
                                 </select>
+                                <div id="cargoEditError" class="text-danger"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="depEdit" class="form-label">Departamento</label>
@@ -192,6 +202,7 @@
                                         <option value="${dep.id_departamento}" id="dep-${dep.id_departamento}">${dep.nombre}</option>
                                     </c:forEach>
                                 </select>
+                                <div id="depEditError" class="text-danger"></div>
                             </div>
                             <div class="mb-3">
                                 <label for="tipoUsuEdit" class="form-label">Tipo usuario</label>
@@ -200,6 +211,7 @@
                                         <option value="${tipoUsu}" id="${tipoUsu}Edit">${tipoUsu}</option>
                                     </c:forEach>
                                 </select>
+                                <div id="tipoUsuEditError" class="text-danger"></div>
                             </div>
                             <div class="d-flex justify-content-end gap-3">
                                 <input type="hidden" id="idEmpleadoEdit" name="idEmpleado" value="" />
@@ -230,28 +242,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
         <script>
-                                                    $(document).ready(function () {
-                                                        $('#tablaEmpleados').DataTable({
-                                                            "searching": true, // Habilitar o deshabilitar el buscador
-                                                            "paging": true, // Habilitar o deshabilitar la paginación
-                                                            "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
-                                                            "pageLength": 10, // Número predeterminado de registros por página
-                                                            "language": {// Personalizar el texto mostrado
-                                                                "search": "Buscar:",
-                                                                "lengthMenu": "Mostrar _MENU_ registros por página",
-                                                                "zeroRecords": "No se encontraron resultados",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                                                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                                                                "infoFiltered": "(filtrado de _MAX_ registros totales)",
-                                                                "paginate": {
-                                                                    "first": "<<",
-                                                                    "last": ">>",
-                                                                    "next": ">",
-                                                                    "previous": "<"
-                                                                }
-                                                            }
-                                                        });
-                                                    });
+                            $(document).ready(function () {
+                                $('#tablaEmpleados').DataTable({
+                                    "searching": true, // Habilitar o deshabilitar el buscador
+                                    "paging": true, // Habilitar o deshabilitar la paginación
+                                    "lengthMenu": [5, 10, 25, 50], // Opciones para el número de registros por página
+                                    "pageLength": 10, // Número predeterminado de registros por página
+                                    "language": {// Personalizar el texto mostrado
+                                        "search": "Buscar:",
+                                        "lengthMenu": "Mostrar _MENU_ registros por página",
+                                        "zeroRecords": "No se encontraron resultados",
+                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                        "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                        "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                                        "paginate": {
+                                            "first": "<<",
+                                            "last": ">>",
+                                            "next": ">",
+                                            "previous": "<"
+                                        }
+                                    }
+                                });
+                            });
         </script>
         <script src="../js/main.js"></script>
     </body>

@@ -62,14 +62,16 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="../empleado/Tareas" method="POST">
+                            <form action="../empleado/Tareas" onsubmit="validarTarea(event)" method="POST">
                                 <div class="mb-3">
                                     <label for="desc" class="form-label text-azul">Descripción</label>
                                     <textarea id="desc" class="form-control text-azul" name="desc" rows="5" cols="10" required></textarea>
+                                    <div id="descError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="fecha" class="form-label text-azul">Fecha</label>
                                     <input type="date" class="form-control text-azul" name="fecha" id="fecha" required>
+                                    <div id="fechaError" class="text-danger"></div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="empleado" class="form-label text-azul">Empleados</label>
@@ -78,6 +80,7 @@
                                             <option value="${empleado.id_empleado}">${empleado.nombre} - ${empleado.departamento.nombre}</option>
                                         </c:forEach>
                                     </select>
+                                    <div id="empleadoError" class="text-danger"></div>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
