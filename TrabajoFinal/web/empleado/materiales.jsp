@@ -166,9 +166,10 @@
                                 <div id="stockEditError" class="text-danger"></div>
                             </div>
                             <input type="hidden" name="id" id="idMaterialEdit" value=""/>
+                            <input type="hidden" name="editar" value="true"/>
                             <div class="d-flex justify-content-end gap-3">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" value="editar" name="editar" class="btn btn-primary">Editar</button>
+                                <button type="submit" class="btn btn-primary">Editar</button>
                             </div>
                         </form>
                     </div>
