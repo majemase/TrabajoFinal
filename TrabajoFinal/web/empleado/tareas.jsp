@@ -58,22 +58,22 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addModalLabel">Añadir Tarea</h1>
+                            <h1 class="modal-title fs-5 text-azul" id="addModalLabel">Añadir Tarea</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="../empleado/Tareas" method="POST">
                                 <div class="mb-3">
-                                    <label for="desc" class="form-label">Descripción</label>
-                                    <textarea id="desc" class="form-control" name="desc" rows="5" cols="10" required></textarea>
+                                    <label for="desc" class="form-label text-azul">Descripción</label>
+                                    <textarea id="desc" class="form-control text-azul" name="desc" rows="5" cols="10" required></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="fecha" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" name="fecha" id="fecha" required>
+                                    <label for="fecha" class="form-label text-azul">Fecha</label>
+                                    <input type="date" class="form-control text-azul" name="fecha" id="fecha" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="empleado" class="form-label">Empleados</label>
-                                    <select class="form-select" name="listaEmpleado" multiple aria-label="Multiple select example" required>
+                                    <label for="empleado" class="form-label text-azul">Empleados</label>
+                                    <select class="form-select text-azul" name="listaEmpleado" multiple aria-label="Multiple select example" required>
                                         <c:forEach var="empleado" items="${empleados}">
                                             <option value="${empleado.id_empleado}">${empleado.nombre} - ${empleado.departamento.nombre}</option>
                                         </c:forEach>
@@ -82,7 +82,7 @@
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Añadir Tarea</button>
+                                    <button type="submit" class="btn btn-primary bg-azul-oscuro">Añadir Tarea</button>
                                 </div>
                             </form>
                         </div>

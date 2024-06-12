@@ -45,42 +45,42 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addModalLabel">Añadir empleado</h1>
+                            <h1 class="modal-title fs-5 text-azul" id="addModalLabel">Añadir empleado</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="/TrabajoFinal/admin/Empleados" method="POST">
                                 <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                    <label for="nombre" class="form-label text-azul">Nombre</label>
+                                    <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" required>
+                                    <label for="email" class="form-label text-azul">Email</label>
+                                    <input type="email" class="form-control text-azul" name="email" id="email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="pass" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" name="pass" id="pass" required>
+                                    <label for="pass" class="form-label text-azul">Contraseña</label>
+                                    <input type="password" class="form-control text-azul" name="pass" id="pass" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="cargo" class="form-label">Cargo</label>
-                                    <select name="cargo" id="cargo" class="form-select" aria-label="Cargo">
+                                    <label for="cargo" class="form-label text-azul">Cargo</label>
+                                    <select name="cargo" id="cargo" class="form-select text-azul" aria-label="Cargo">
                                         <c:forEach var="cargo" items="${cargos}">
                                             <option value="${cargo}">${cargo}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="dep" class="form-label">Departamento</label>
-                                    <select id="dep" name="dep" class="form-select" aria-label="Departamento">
+                                    <label for="dep" class="form-label text-azul">Departamento</label>
+                                    <select id="dep" name="dep" class="form-select text-azul" aria-label="Departamento">
                                         <c:forEach var="dep" items="${departamentos}">
                                             <option value="${dep.id_departamento}">${dep.nombre}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="tipoUsu" class="form-label">Tipo usuario</label>
-                                    <select id="tipoUsu" name="tipoUsu" class="form-select" aria-label="TipoUsu">
+                                    <label for="tipoUsu" class="form-label text-azul">Tipo usuario</label>
+                                    <select id="tipoUsu" name="tipoUsu" class="form-select text-azul" aria-label="TipoUsu">
                                         <c:forEach var="tipoUsu" items="${tipoUsus}">
                                             <option value="${tipoUsu}">${tipoUsu}</option>
                                         </c:forEach>
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary" name="añadir" value="true">Añadir empleado</button>
+                                    <button type="submit" class="btn btn-primary bg-azul-oscuro" name="añadir" value="true">Añadir empleado</button>
                                 </div>
                             </form>
                         </div>

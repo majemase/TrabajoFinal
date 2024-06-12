@@ -40,19 +40,19 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addModalLabel">Añadir Departamento</h1>
+                            <h1 class="modal-title fs-5 text-azul" id="addModalLabel">Añadir Departamento</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="/TrabajoFinal/admin/Departamentos" method="POST">
                                 <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                    <label for="nombre" class="form-label text-azul">Nombre</label>
+                                    <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Añadir departamento</button>
+                                    <button type="submit" class="btn btn-primary bg-azul-oscuro">Añadir departamento</button>
                                 </div>
                             </form>
                         </div>

@@ -55,22 +55,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Ajustes de usuario</h1>
+                <h1 class="modal-title fs-5 text-azul" id="exampleModalLabel">Ajustes de usuario</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="/TrabajoFinal/empleado/MenuPrincipal" method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <p class="">${usuario.nombre}</p>
+                        <label class="form-label text-azul">Nombre</label>
+                        <p class="text-azul">${usuario.nombre}</p>
                     </div>
                     <div class="mb-3">
-                        <label for="passAj" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" value="${usuario.pass}" name="passAj" id="passAj">
+                        <label for="passAj" class="form-label text-azul">Contraseña</label>
+                        <input type="password" class="form-control text-azul" value="${usuario.pass}" name="passAj" id="passAj">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Cargo </label>
-                        <p class="">${usuario.cargo}</p>
+                        <label class="form-label text-azul">Cargo</label>
+                        <p class="text-azul">${usuario.cargo}</p>
                     </div>
                 </div>
                 <div class="text-warning">

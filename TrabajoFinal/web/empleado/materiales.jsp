@@ -41,27 +41,27 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="addModalLabel">Añadir Materiales</h1>
+                            <h1 class="modal-title fs-5 text-azul" id="addModalLabel">Añadir Materiales</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="../empleado/Materiales" method="POST">
                                 <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" name="nombre" id="nombre" required>
+                                    <label for="nombre" class="form-label text-azul">Nombre</label>
+                                    <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="precio" class="form-label">Precio</label>
-                                    <input type="number" step="0.01" class="form-control" name="precio" id="precio" required>
+                                    <label for="precio" class="form-label text-azul">Precio</label>
+                                    <input type="number" step="0.01" class="form-control text-azul" name="precio" id="precio" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control" name="stock" id="stock" required>
+                                    <label for="stock" class="form-label text-azul">Stock</label>
+                                    <input type="number" class="form-control text-azul" name="stock" id="stock" required>
                                 </div>
                                 <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary">Añadir Material</button>
+                                    <button type="submit" class="btn btn-primary bg-azul-oscuro">Añadir Material</button>
                                 </div>
                             </form>
                         </div>
