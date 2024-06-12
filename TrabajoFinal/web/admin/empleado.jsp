@@ -49,7 +49,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/TrabajoFinal/admin/Empleados" method="POST" onsubmit="validarEmpleado(event)">
+                            <form action="../admin/Empleados" method="POST" onsubmit="validarEmpleado(event)">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label text-azul">Nombre</label>
                                     <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
@@ -92,9 +92,10 @@
                                     </select>
                                     <div id="tipoUsuError" class="text-danger"></div>
                                 </div>
+                                <input type="hidden" name="añadir" value="true"/>
                                 <div class="d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary bg-azul-oscuro" name="añadir" value="true">Añadir empleado</button>
+                                    <button type="submit" class="btn btn-primary bg-azul-oscuro">Añadir empleado</button>
                                 </div>
                             </form>
                         </div>
@@ -170,7 +171,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="Empleados" method="POST" onsubmit="validarEmpleadoEdit(event)">
+                        <form action="../admin/Empleados" method="POST" onsubmit="validarEmpleadoEdit(event)">
                             <div class="mb-3">
                                 <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
@@ -213,10 +214,11 @@
                                 </select>
                                 <div id="tipoUsuEditError" class="text-danger"></div>
                             </div>
+                            <input type="hidden" name="editar" value="true"/>
                             <div class="d-flex justify-content-end gap-3">
                                 <input type="hidden" id="idEmpleadoEdit" name="idEmpleado" value="" />
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary" name="editar" value="true">Guardar cambios</button>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
                             </div>
                         </form>
                     </div>

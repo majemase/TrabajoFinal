@@ -44,7 +44,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/TrabajoFinal/admin/Departamentos" method="POST" onsubmit="validarDepartamento(event)">
+                            <form action="../admin/Departamentos" method="POST" onsubmit="validarDepartamento(event)">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label text-azul">Nombre</label>
                                     <input type="text" class="form-control text-azul" name="nombre" id="nombre" required>
@@ -133,7 +133,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="Departamentos" method="POST" onsubmit="validarDepartamentoEdit(event)">
+                        <form action="../admin/Departamentos" method="POST" onsubmit="validarDepartamentoEdit(event)">
                             <div class="mb-3">
                                 <label for="nombreEdit" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" name="nombre" id="nombreEdit">
@@ -156,6 +156,7 @@
                         </select>
                     </div> -->
                             <input type="hidden" name="idDep" id="idDep" value=""/>
+                            <input type="hidden" name="editar" value="true"/>
                             <div class="d-flex justify-content-end gap-3">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                 <button type="submit" value="editar" name="editar" class="btn btn-primary">Editar</button>
