@@ -16,8 +16,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -123,15 +125,15 @@ public class modeloTareas {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(PU);
         TareasJpaController tjc = new TareasJpaController(emf);
         DepartamentoJpaController djc = new DepartamentoJpaController(emf);
-        List<Tareas> tareasDepartamento = new ArrayList<>();
+        Set<Tareas> tareasDepartamentoSet = new HashSet<>();
         Departamento departamento = djc.findDepartamento(id_departamento);
         List<Empleado> empleadosDepartamento = departamento.getEmpleados();
         for (Empleado empleado : empleadosDepartamento) {
             List<Tareas> tareasEmpleado = empleado.getTareas();
-            tareasDepartamento.addAll(tareasEmpleado);
+            tareasDepartamentoSet.addAll(tareasEmpleado);
         }
         emf.close();
-        return tareasDepartamento;
+        return new ArrayList<>(tareasDepartamentoSet);
     }
 
     public static void eliminarTarea(Long id) {
