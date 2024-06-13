@@ -215,7 +215,11 @@ function verDep(departmentId) {
             $("#idDep").val(response.id);
         },
         error: function (xhr, status, error) {
-            console.error('Error en la solicitud: ' + error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se ha encontrado el departamento"
+            });
         }
     });
 }
@@ -235,7 +239,11 @@ function verEmp(empleadoId) {
             $('#' + response.tipoUsu + 'Edit').prop('selected', true);
         },
         error: function (xhr, status, error) {
-            console.error('Error en la solicitud: ' + error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se ha encontrado el empleado"
+            });
         }
     });
 }
@@ -409,7 +417,11 @@ function verMat(materialId) {
             $('#stockEdit').val(response.stock);
         },
         error: function (xhr, status, error) {
-            console.error('Error en la solicitud: ' + error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No se ha encontrado el material"
+            });
         }
     });
 }
