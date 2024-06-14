@@ -34,7 +34,7 @@ function validarTarea(event) {
     const fechaActual = new Date();
     const fechaSeleccionada = new Date(fecha);
     if (fechaSeleccionada > fechaActual) {
-        document.getElementById('fechaError').textContent = 'La fecha no puede ser después de la fecha actual.';
+        document.getElementById('fechaError').textContent = 'La fecha no puede ser anterior de la fecha actual.';
         hayErrores = true;
     }
     if (listaEmpleado.selectedOptions.length === 0) {

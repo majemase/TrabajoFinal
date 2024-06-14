@@ -11,5 +11,6 @@ package modelo;
 public enum Estado {
     REALIZADO,
     NO_REALIZADO,
-    PROCESO
+    PROCESO,
+    RECHAZADO
 }

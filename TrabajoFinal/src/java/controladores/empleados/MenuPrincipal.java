@@ -45,8 +45,6 @@ public class MenuPrincipal extends HttpServlet {
             String pass = request.getParameter("passAj");
             if (pass.equals(pass)) {
                 modeloEmpleado.editarEmpleado(id, pass);
-            } else {
-                request.setAttribute("error", "Las contraseñas no coinciden");
             }
         }
         if (request.getParameter("estado") != null) {
